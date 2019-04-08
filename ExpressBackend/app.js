@@ -1,38 +1,56 @@
-var express = require('express');
-var app = express();
-var bodyParser = require('body-parser');
-var cors = require('cors');
-app.use(cors());
+const express = require('express');
+const path = require('path');
+const logger = require('morgan');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+
+ const index = require('./src/router/index');
+// const users = require('./src/routes/users');
+// const books = require('./src/routes/books');
+
+const app = express();
+
+mongoose.connect('mongodb://localhost/tarimAppDb', { useMongoClient:  true });
+mongoose.connection.on('open', () => {
+  console.log("MongoDB: Connected");
+});
+mongoose.connection.on('error', (err) => {
+  console.log("MongoDB: Error", err);
+});
+
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'jade');
+
+// uncomment after placing your favicon in /public
+//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(logger('dev'));
 app.use(bodyParser.json());
-var mongo = require('mongodb').MongoClient;
-var url = 'mongodb+srv://ferat:ferat123@cluster0-wgidr.mongodb.net/test?retryWrites=true';
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
 
-mongo.git s(url, (err)=>{
-  console.log('Terhubung ke database!')
-})
+app.use('/', index);
+// app.use('/users', users);
+// app.use('/books', books);
 
-app.get('/data', (req, res)=>{
-  mongo.connect(url, (err, db)=>{
-    var collection = db.collection('ninja');
-    collection.find({}).toArray((x, hasil)=>{
-      res.send(hasil);
-    })
-  })
-})
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+  var err = new Error('Not Found');
+  err.status = 404;
+  next(err);
+});
 
-app.post('/data', (req, res)=>{
-  mongo.connect(url, (err, db)=>{
-    var collection = db.collection('ninja');
-    var sesuatu = {
-      nama: req.body.nama,
-      usia: req.body.usia
-    }
-    collection.insert(sesuatu, (x, hasil)=>{
-      res.send(hasil);
-    })
-  })
-})
+// error handler
+app.use(function(err, req, res, next) {
+  // set locals, only providing error in development
+  res.locals.message = err.message;
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-app.listen(3210, ()=>{
-  console.log('Server aktif @port 3210!');
-})
+  // render the error page
+  res.status(err.status || 500);
+  res.render('error');
+});
+
+module.exports = app;
