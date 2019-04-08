@@ -1,1 +1,1 @@
-# Cross-PlatformReactNative-Tar-m-Uygulamas-
+# Cross-PlatformReactNative-Tarım-Uygulaması-
