@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Alert, TextInput } from 'react-native';
 import Button from '../GlobalJS/Button';
-import Card from '../components/Card';
-import CardSection from '../components/CardSection';
-import Spinner from '../components/Spinner';
+import Card from '../GlobalJS/Card';
+import CardSection from '../GlobalJS/CardSection';
+import Spinner from '../GlobalJS/Spinner';
 import axios from 'axios';
 
 class LoginForm extends Component {

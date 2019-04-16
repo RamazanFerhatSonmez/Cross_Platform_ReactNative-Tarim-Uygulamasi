@@ -2,9 +2,9 @@ import React , { Component } from 'react';
 import { View } from 'react-native';
 import Header from '../GlobalJS/Header';
 import LoginForm from '../components/LoginForm';
-import CardSection from '../components/CardSection';
+import CardSection from '../GlobalJS/CardSection';
 import Button from '../GlobalJS/Button';
-import Spinner from '../components/Spinner';
+import Spinner from '../GlobalJS/Spinner';
 
 class Main  extends Component {
   state = { loggedIn: false };
