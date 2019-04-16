@@ -1,18 +1,18 @@
 import React , { Component } from 'react';
-import { Text , View } from 'react-native';
-import Header from './GlobalJS/Header';
-import LoginForm from './components/LoginForm';
-import CardSection from './components/CardSection';
-import Button from './GlobalJS/Button';
-import Spinner from './components/Spinner';
+import { View } from 'react-native';
+import Header from '../GlobalJS/Header';
+import LoginForm from '../components/LoginForm';
+import CardSection from '../components/CardSection';
+import Button from '../GlobalJS/Button';
+import Spinner from '../components/Spinner';
 
 class Main  extends Component {
-  state = { loggedIn: null };
+  state = { loggedIn: false };
   clickLogout() {
-    Firebase.auth().signOut();
+
   }
   renderContent() {
-    switch (loggedIn) {
+    switch (this.state.loggedIn) {
       case true:
         return (
           <CardSection>
@@ -27,9 +27,9 @@ class Main  extends Component {
         );
       default:
         return (
-          <View>
-            <Spinner size="large" />
-          </View>
+            <View>
+                <LoginForm />
+            </View>
         );
     }
   }

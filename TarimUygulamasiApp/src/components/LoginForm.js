@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { Alert, TextInput } from 'react-native';
-import Button from './GlobalJS/Button';
-import Card from './components/Card';
-import CardSection from './components/CardSection';
-import Spinner from './components/Spinner';
+import Button from '../GlobalJS/Button';
+import Card from '../components/Card';
+import CardSection from '../components/CardSection';
+import Spinner from '../components/Spinner';
+import axios from 'axios';
 
 class LoginForm extends Component {
   state ={ email: '', password: '', loading: false};
@@ -20,6 +21,20 @@ class LoginForm extends Component {
           { text: 'Tamam', onPress: () => null }
         ]
       );
+    }else{
+        const url = 'http://127.0.0.1:8082/userLogin/dln@gmail.com';
+        debugger
+        axios.get(url)
+            .then((user) => {
+                console.log(ambilData.data);
+                if(user){
+                    this.setState({ loggedIn: true });
+                    this.loginSucces.bind(this)
+                }else{
+                    this.setState({ loggedIn: false });
+                    this.loginFail.bind(this)
+                }
+            })
     }
   }
   loginSucces() {
