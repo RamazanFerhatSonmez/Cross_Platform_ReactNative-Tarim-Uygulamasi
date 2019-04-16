@@ -30,19 +30,16 @@ const tarlaSchema = new Schema({
                 urunMiktar: Number,
                 urunEklemeTarih: Date,
                 urunMasrafTablo: [{
-                        urunSheamaId: String,
                         islemAciklama: String,
                         islemMiktari: Number,
                         islemMasraf: Number,
                 }],
                 islemTuru: [{
-                        urunSheamaId: String,
                         islemAd: String,
                         islemMasraf: Number,
                         islemTarih: Date
                 }],
                 urunHasat: [{
-                        urunSheamaId: String,
                         birimHasat: Number,
                         hasatMiktari: Number,
                         hasatTarihi: Date

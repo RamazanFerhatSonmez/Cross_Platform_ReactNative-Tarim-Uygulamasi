@@ -28,7 +28,20 @@ exports.userSignIn = function (req, res) {
                 res.send('Böyle bir id adresi sistemde kayıtlı değil.')
             }else{
                 console.log('Istek Gönderildi...')
-                res.send(user)
+                const tarlaBilgi = user.sezonTanimlama[0].tarla;
+                if(tarlaBilgi){
+                    const tarlaArray = [];
+                    tarlaBilgi.forEach(element => {
+                        console.log(element)
+                        tarlaSchema.findOne({'tarla.tarlaID':element._id}).then((tarla) =>{
+                            tarla ? tarlaArray.push(tarla) : console.log('Tarla Bilgisi Yok')
+                        })
+                    });
+                    res.send(user,tarlaArray);
+                }else{
+                    res.send(user)
+                }
+
      
             }
         })
@@ -97,3 +110,58 @@ exports.userSignIn = function (req, res) {
             response.ok === 1 ? res.send("Kayıt Başarılı") : res.send("Tarla eklenemedi") ;
         });
     };
+
+    exports.urunSchemaMasraf = function (req, res) {
+        console.log('Istek Gönderildi...')
+        tarlaSchema.update({'tarla.tarlaID':req.params.tarlaid,'urunSheama._id':req.params.urunSchmaId}, {
+            '$push':{
+                'urunSheama.$.urunMasrafTablo':[{
+                    'islemAciklama': req.params.desc,
+                    'islemMiktari': req.params.miktar,
+                    'islemMasraf': req.params.masraf,
+                }]
+            }
+        }, function (err, response) {
+            if (err) return next(err);
+            response.ok === 1 ? res.send("Kayıt Başarılı") : res.send("Kayıt Başarısız") ;
+        });
+    };
+
+    exports.urunSchemaTur= function (req, res) {
+        console.log('Istek Gönderildi...')
+        tarlaSchema.update({'tarla.tarlaID':req.params.tarlaid,'urunSheama._id':req.params.urunSchmaId}, {
+            '$push':{
+                'urunSheama.$.islemTuru':[{
+                    'islemAd': req.params.name,
+                    'islemMasraf': req.params.masraf,
+                    'islemTarih': Date.now(),
+                }]
+            }
+        }, function (err, response) {
+            if (err) return next(err);
+            response.ok === 1 ? res.send("Kayıt Başarılı") : res.send("Kayıt Başarısız") ;
+        });
+    };
+
+    exports.urunSchemaHasat = function (req, res) {
+        console.log('Istek Gönderildi...')
+        tarlaSchema.update({'tarla.tarlaID':req.params.tarlaid,'urunSheama._id':req.params.urunSchmaId}, {
+            '$push':{
+                'urunSheama.$.urunHasat':[{
+                    'birimHasat': req.params.birim,
+                    'hasatMiktari': req.params.hasatmiktar,
+                    'hasatTarihi': Date.now(),
+                }]
+            }
+        }, function (err, response) {
+            if (err) return next(err);
+            response.ok === 1 ? res.send("Kayıt Başarılı") : res.send("Kayıt Başarısız") ;
+        });
+    };
+    
+    exports.getTarla = function (req,res){
+        tarlaSchema.findOne({'tarla.tarlaID': req.params.tarlaId}).then((tarla) =>{
+            tarla ? res.send(tarla) : console.log('Tarla getirilemedi')
+        })
+    };
+    
