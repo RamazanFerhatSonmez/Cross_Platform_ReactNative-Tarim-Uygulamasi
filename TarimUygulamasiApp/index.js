@@ -1,4 +1,4 @@
 import {AppRegistry} from 'react-native';
-import Main from './src/components/Main';
+import Main from './src/Main';
 
 AppRegistry.registerComponent('TarimUygulamasiApp',() => Main);
