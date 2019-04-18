@@ -1,9 +1,9 @@
 import React from 'react';
 import { Scene, Router } from 'react-native-router-flux';
 import LoginForm from './components/LoginForm';
-import {applyMiddleware, createStore} from "redux";
-import reducers from "./reducers";
-import ReduxThunk from "redux-thunk";
+import uyeOlForm from './components/uyeOlForm';
+import userProfil from './components/userProfil';
+//import konumEkleMap from '../map/appOpen';
 
 class RouterComponent extends React.Component {
 
@@ -13,8 +13,9 @@ class RouterComponent extends React.Component {
                 navigationBarStyle={styles.navBar}
                 titleStyle={styles.navBarTitle}
                 barButtonTextStyle={styles.barButtonTextStyle}
-                barButtonIconStyle={styles.barButtonIconStyle}
-                sceneStyle={{ marginTop: 53 }}>
+                barButtonIconStyle={styles.barButtonIconStyle}>
+                <Scene
+                    key="kimlik">
                     <Scene
                         key="girisYap"
                         component={LoginForm}
@@ -24,7 +25,15 @@ class RouterComponent extends React.Component {
                             fontWeight: '600',
                         }}
                         title="Giriş Sayfası" />
-
+                    <Scene
+                        key="uyeOl"
+                        component={uyeOlForm}
+                        title="Üye Ol" />
+                    <Scene
+                        key="profilform"
+                        component={userProfil}
+                        title="Ana Sayfa"/>
+                </Scene>
             </Router>
         );
     }

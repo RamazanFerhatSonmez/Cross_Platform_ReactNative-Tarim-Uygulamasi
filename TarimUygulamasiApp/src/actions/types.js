@@ -1,18 +1,18 @@
 export const EMAIL_CHANGED = 'email_changed';
 export const PASSWORD_CHANGED = 'password_changed';
 
-// export const EMAIL_CHANGED_UYE = 'email_changed_uye';
-// export const PASSWORD_CHANGED_UYE = 'password_changed_uye';
-// export const AD_CHANGED_UYE = 'ad_changed_uye';
-// export const SOYAD_CHANGED_UYE = 'soyad_changed_uye';
+ export const EMAIL_CHANGED_UYE = 'email_changed_uye';
+ export const PASSWORD_CHANGED_UYE = 'password_changed_uye';
+ export const AD_CHANGED_UYE = 'ad_changed_uye';
+ export const SOYAD_CHANGED_UYE = 'soyad_changed_uye';
 
 export const LOGIN_USER = 'login_user';
 export const LOGIN_USER_SUCCESS = 'login_user_succes';
 export const LOGIN_USER_FAIL = 'login_user_fail';
 
-// export const LOGIN_USER_UYE = 'login_user_uye';
-// export const LOGIN_USER_SUCCESS_UYE = 'login_user_succes_uye';
-// export const LOGIN_USER_FAIL_UYE = 'login_user_fail_uye';
+ export const LOGIN_USER_UYE = 'login_user_uye';
+ export const LOGIN_USER_SUCCESS_UYE = 'login_user_succes_uye';
+ export const LOGIN_USER_FAIL_UYE = 'login_user_fail_uye';
 
 // export const TARLA_EKLE_CHANGED = 'tarla_ekle_changed';
 

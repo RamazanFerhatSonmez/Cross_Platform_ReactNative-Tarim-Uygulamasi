@@ -8,7 +8,7 @@ import { EMAIL_CHANGED,
   LOGIN_USER_FAIL } from './types';
 
 export const emailChanged = (email) => {
-  return (dispatch) => {
+  return dispatch => {
     dispatch({
       type: EMAIL_CHANGED,
       payload: email
@@ -31,11 +31,12 @@ export const loginUser = ({ email, password }) => {
     if (email === '' || password === '') {
        loginFailBos(dispatch);
     } else {
-      axios.get('/userLogin/'+ email)
+      debugger
+      axios.get('http://192.168.1.2:3033/userLogin/'+ email)
           .then(function (response) {
             debugger
-            if(response.KullaniciSifre === password){
-                loginSucces(dispatch, response)
+            if(response.data.KullaniciSifre === password){
+                loginSucces(dispatch, response.data)
             }else{
               loginFail(dispatch)
             }
@@ -50,7 +51,7 @@ export const loginUser = ({ email, password }) => {
 const loginFail = (dispatch) => {
   Alert.alert(
     'Mesaj',
-    'Kullanıcı bilgileri hatalı',
+    'Şifre Hatalı',
     [
       { text: 'Tamam', onPress: () => null }
     ]
@@ -65,7 +66,7 @@ const loginSucces = (dispatch, user) => {
     type: LOGIN_USER_SUCCESS,
     payload: user
   });
-  Actions.main();
+  Actions.profilform();
 };
 
 const loginFailBos = (dispatch) => {

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-
 import {
     StyleSheet,
     TextInput,
@@ -11,7 +10,11 @@ import {
     TouchableOpacity
 } from 'react-native';
 import { connect } from 'react-redux';
-//import { Actions } from 'react-native-router-flux';
+import { Actions } from 'react-native-router-flux';
+const email = require('../images/email.png');
+const password = require('../images/password.png');
+const w = percent => (width * percent) / 100;
+const h = percent => (height * percent) / 100;
 
 import {
     emailChanged,
@@ -20,14 +23,16 @@ import {
 
 import { Spinner } from '../GlobalJS';
 
-var { height, width } = Dimensions.get('window');
+let { height, width } = Dimensions.get('window');
 
 class LoginForm extends Component {
     state ={
         email: '',
         password: '',
         loading: false };
-
+    clickuyeOl() {
+        Actions.uyeOl();
+    }
     clickLogin() {
         const {
             email,
@@ -51,15 +56,22 @@ class LoginForm extends Component {
             ]
         );
     }
-
     renderButton() {
         if (!this.props.loading) {
             return(
-            <TouchableOpacity
-                onPress={this.clickLogin.bind(this)}
-                style={styles.buttonStyle}>
-                <Text style={styles.textStyle}> Giriş Yap </Text>
-            </TouchableOpacity>
+                <View>
+                    <TouchableOpacity
+                        onPress={this.clickLogin.bind(this)}
+                        style={styles.buttonStyle}>
+                        <Text style={styles.textStyle}> Giriş Yap </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={this.clickuyeOl}
+                        style={styles.buttonStyle}>
+                        <Text style={styles.textStyle}>Üye Ol </Text>
+                    </TouchableOpacity>
+                </View>
+
             )
         }else{
             return(
@@ -68,26 +80,25 @@ class LoginForm extends Component {
         }
 
     }
-
     render() {
         const { TextInputStyle } = styles;
         return (
             <ImageBackground
-                source={require('../images/girisSayfasiTarla.png')}
+                source={require('../images/uyeOlTarla.jpg')}
                 style={styles.backgroundImage} >
                 <View
-                    style={{flex:1 ,marginTop: height/4}}>
-                    <TextInput
-                        placeholder="E-mail"
-                        style={TextInputStyle}
-                        value={this.props.email}
-                        onChangeText={email => this.props.emailChanged(email)}/>
-                    <TextInput
-                        secureTextEntry
-                        placeholder="Şifre"
-                        style={TextInputStyle}
-                        value={this.props.password}
-                        onChangeText={password => this.props.passwordChanged(password)}/>
+                    style={styles.searchSection}>
+                        <TextInput
+                            placeholder="E-mail"
+                            style={TextInputStyle}
+                            value={this.props.email}
+                            onChangeText={email => this.props.emailChanged(email)}/>
+                        <TextInput
+                            secureTextEntry
+                            placeholder="Şifre"
+                            style={TextInputStyle}
+                            value={this.props.password}
+                            onChangeText={password => this.props.passwordChanged(password)}/>
                     {this.renderButton()}
                 </View>
             </ImageBackground>
@@ -143,5 +154,16 @@ const styles = StyleSheet.create({
         position: 'relative'
     }
 });
+const mapStateToProps = ({ kimlikdogrulamaResponse }) => {
+    const {
+        email,
+        password,
+        loading } = kimlikdogrulamaResponse;
+    return {
+        email: 'dln@gmail.com',//girişte otomatık gelsin diye
+        password: 'dln12',
+        loading
+    };
+};
 
-export default connect({ emailChanged, passwordChanged, loginUser })(LoginForm);
+export default connect(mapStateToProps,{emailChanged, passwordChanged, loginUser })(LoginForm);

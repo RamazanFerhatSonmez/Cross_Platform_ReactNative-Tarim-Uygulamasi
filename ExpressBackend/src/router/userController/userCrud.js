@@ -28,20 +28,7 @@ exports.userSignIn = function (req, res) {
                 res.send('Böyle bir id adresi sistemde kayıtlı değil.')
             } else {
                 console.log('Istek Gönderildi...')
-                const tarlaBilgi = user.sezonTanimlama[0].tarla;
-                if (tarlaBilgi) {
-                    const tarlaArray = [];
-                    tarlaBilgi.forEach(element => {
-                        console.log(element)
-                        tarlaSchema.findOne({ 'tarla.tarlaID': element._id }).then((tarla) => {
-                            tarla ? tarlaArray.push(tarla) : console.log('Tarla Bilgisi Yok')
-                        })
-                    });
-                    res.send(user, tarlaArray);
-                } else {
-                    res.send(user)
-                }
-
+                res.send(user)
 
             }
         })
