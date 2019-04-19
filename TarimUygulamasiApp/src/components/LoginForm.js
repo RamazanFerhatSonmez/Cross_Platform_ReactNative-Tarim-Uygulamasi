@@ -160,8 +160,8 @@ const mapStateToProps = ({ kimlikdogrulamaResponse }) => {
         password,
         loading } = kimlikdogrulamaResponse;
     return {
-        email: 'dln@gmail.com',//girişte otomatık gelsin diye
-        password: 'dln12',
+        email: 'frt@gmail.com',//girişte otomatık gelsin diye
+        password: 'frt123',
         loading
     };
 };

@@ -58,7 +58,7 @@ export const loginUseruye = ({ ad, soyad, email, password }) => {
                 .then(function (response) {
                     debugger
                     if((response.status === 200)){
-                        loginSucces(dispatch, response)
+                        loginSucces(dispatch, email)
                     }else{
                         loginFail(dispatch)
                     }
@@ -91,6 +91,7 @@ const loginSucces = (dispatch, user) => {
             { text: 'Tamam', onPress: () => null }
         ]
     );
+    axios.post('http://192.168.1.2:3033/SignIn/'+ _post)
     Actions.girisYap();
 };
 

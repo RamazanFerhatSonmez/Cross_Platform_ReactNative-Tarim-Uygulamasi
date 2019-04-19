@@ -34,7 +34,8 @@ exports.userSignIn = function (req, res) {
         })
     }
 exports.shemaInsert = function (req, res) {
-    userSchema.findByIdAndUpdate(req.params.id, {
+    console.log('Istek Gönderildi...')
+    userSchema.update({ KullaniciMail: req.params.email }, {
         '$push': {
             'sezonTanimlama': [{
                 'sezonAd': req.params.sezonName,
@@ -48,7 +49,6 @@ exports.shemaInsert = function (req, res) {
 };
 exports.shemaTarlaInsert = function (req, res) {
     console.log('Istek Gönderildi...')
-    //{_id: restID, 'menuItems._id': menuItemID}TarlaKonumInsert
     userSchema.update({ _id: req.params.id, 'sezonTanimlama._id': req.params.sezonId }, {
         '$push': {
             'sezonTanimlama.$.tarla': [{
@@ -60,42 +60,90 @@ exports.shemaTarlaInsert = function (req, res) {
         }
     }, function (err, response) {
         if (err) return next(err);
-        response.ok === 1 ? res.send("Kayıt Başarılı") : res.send("Tarla eklenemedi");
+        (response && response.ok === 1 && response.nModified === 1 && response.n === 1) ? res.send(response) : res.send(false);
     });
 };
 exports.TarlaKonumInsert = function (req, res) {
-    let tarlaSchemas = new tarlaSchema({
-        tarla: {
-            tarlaID: req.params.tarlaId,
-            tarlaKonum: {
-                lat: req.params.lat,
-                long: req.params.long,
-                Accuracy: req.params.acc,
-            }
+    tarlaSchema.find({ 'tarlaID': req.params.tarlaId }).then((responsee) => {
+        console.log("RES:: "+ responsee)
+        if (responsee && responsee.length === 1) {
+            console.log("RES::SSSSS ")
+            tarlaSchema.update({ 'tarla.tarlaID': req.params.tarlaId }, {
+                '$push': {
+                    'tarla.$.tarlaKonum': [{
+                        'tarlaID': req.params.tarlaId,
+                        'lat': req.params.lat,
+                        'long': req.params.long,
+                        'Accuracy': req.params.acc,
+                    }]
+                }
+            }, function (err, response) {
+                if (err) return next(err);
+                (response && response.ok === 1 && response.nModified === 1 && response.n === 1) ? res.send(true) : res.send(false);
+            });
+        } else {
+            let tarlaSchemas = new tarlaSchema({
+                tarlaID: req.params.tarlaId,
+                tarla: {
+                    tarlaID: req.params.tarlaId,
+                    tarlaKonum: {
+                        lat: req.params.lat,
+                        long: req.params.long,
+                        Accuracy: req.params.acc,
+                    }
+                }
+            })
+            tarlaSchemas.save(function (err) {
+                if (err) return next(err);
+                res.send('Tarla Konum Successfully');
+            })
         }
-    })
-    tarlaSchemas.save(function (err) {
-        if (err) return next(err);
-
-        res.send('Tarla Konum Successfully');
     })
 };
 
 //** Urun Schema Ekleme */
 exports.urunSchemaInsert = function (req, res) {
-    console.log('Istek Gönderildi...')
-    tarlaSchema.update({ 'tarla.tarlaID': req.params.tarlaId }, {
-        '$push': {
-            'urunSheama': [{
-                'urunAd': req.params.urunName,
-                'urunMiktar': req.params.urunMiktar,
-                'urunEklemeTarih': Date.now(),
-            }]
+
+    tarlaSchema.find({ 'tarlaID': req.params.tarlaId }).then((responsee) => {
+        if (responsee && responsee.length === 1) {
+            tarlaSchema.update({ 'tarla.tarlaID': req.params.tarlaId }, {
+                '$push': {
+                    'urunSheama': [{
+                        'tarlaID': req.params.tarlaId,
+                        'urunAd': req.params.urunName,
+                        'urunMiktar': req.params.urunMiktar,
+                        'urunEklemeTarih': Date.now(),
+                    }]
+                }
+            }, function (err, response) {
+                if (err) return next(err);
+                (response && response.ok === 1 && response.nModified === 1 && response.n === 1) ? res.send(response) : res.send(false);
+            });
+        } else {
+            let tarlaSchemas = new tarlaSchema({
+                tarlaID: req.params.tarlaId,
+                urunSheama: {
+                    tarlaID: req.params.tarlaId,
+                    urunAd: req.params.urunName,
+                    urunMiktar: req.params.urunMiktar,
+                    urunEklemeTarih: Date.now(),
+                },
+                tarla: {
+                    tarlaID: req.params.tarlaId,
+                }
+            })
+            tarlaSchemas.save(function (err) {
+                if (err) return next(err);
+                res.send('Tarla Konum Successfully');
+            })
         }
-    }, function (err, response) {
-        if (err) return next(err);
-        response.ok === 1 ? res.send("Kayıt Başarılı") : res.send("Tarla eklenemedi");
-    });
+    })
+
+
+
+
+    console.log('Istek Gönderildi...')
+
 };
 
 exports.urunSchemaMasraf = function (req, res) {
@@ -110,7 +158,7 @@ exports.urunSchemaMasraf = function (req, res) {
         }
     }, function (err, response) {
         if (err) return next(err);
-        response.ok === 1 ? res.send("Kayıt Başarılı") : res.send("Kayıt Başarısız");
+        response.ok === 1 ? res.send(true) : res.send(false);
     });
 };
 
@@ -126,7 +174,7 @@ exports.urunSchemaTur = function (req, res) {
         }
     }, function (err, response) {
         if (err) return next(err);
-        response.ok === 1 ? res.send("Kayıt Başarılı") : res.send("Kayıt Başarısız");
+        response.ok === 1 ? res.send(true) : res.send(false);
     });
 };
 
@@ -148,6 +196,34 @@ exports.urunSchemaHasat = function (req, res) {
 
 exports.getTarla = function (req, res) {
     tarlaSchema.findOne({ 'tarla.tarlaID': req.params.tarlaId }).then((tarla) => {
-        tarla ? res.send(tarla) : console.log('Tarla getirilemedi')
+        tarla ? res.send(tarla) : res.send(false)
     })
 };
+//router.get('/getSezon/:email', userController.getSezon);
+exports.getSezon = function (req, res) {
+    let query = { KullaniciMail: req.params.email };
+    userSchema.find(query).then((data) => {
+        data ? res.send(data) : res.send(false);
+    })
+}
+//router.get('/getSezonTarla/:sezonId', userController.getSezonTarla);
+exports.getSezonTarla = function (req, res) {
+    let query = { 'sezonTanimlama._id': req.params.sezonId }
+    userSchema.findOne(query, { 'sezonTanimlama.tarla': 1 }).then((data) => {
+        data ? res.json(data) : res.send(false);
+    })
+}
+//router.get('/getTarlaKonum/:tarlaId', userController.getTarlaKonum);
+exports.getTarlaKonum = function (req, res) {
+    let query = { 'tarla.tarlaID': req.params.tarlaId }
+    tarlaSchema.find(query, { 'tarla.tarlaKonum': 1 }).then((data) => {
+        data ? res.send(data) : res.send(false);
+    })
+}
+//router.get('/getUrunShema/:tarlaId', userController.getTarlaKonum);
+exports.getUrunShema = function (req, res) {
+    let query = { 'urunSheama.tarlaID': req.params.tarlaId }
+    tarlaSchema.find(query, { 'tarla': 0 }).then((data) => {
+        data ? res.send(data) : res.send(false);
+    })
+}
