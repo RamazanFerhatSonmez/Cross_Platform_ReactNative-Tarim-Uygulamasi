@@ -18,21 +18,18 @@ exports.userSignIn = function (req, res) {
     } else {
         res.send('Şifreler Uyuşmuyor');
     }
-},
-
-    //router.get('/userLogin:KullaniciMail', user_controller.userLogin);
-
-    exports.userLogin = function (req, res) {
+};
+//router.get('/userLogin:KullaniciMail', user_controller.userLogin);
+exports.userLogin = function (req, res) {
         userSchema.findOne({ KullaniciMail: req.params.email }).then((user) => {
             if (!user) {
                 res.send('Böyle bir id adresi sistemde kayıtlı değil.')
             } else {
                 console.log('Istek Gönderildi...')
                 res.send(user)
-
             }
         })
-    }
+};
 exports.shemaInsert = function (req, res) {
     console.log('Istek Gönderildi...')
     userSchema.update({ KullaniciMail: req.params.email }, {
@@ -65,7 +62,7 @@ exports.shemaTarlaInsert = function (req, res) {
 };
 exports.TarlaKonumInsert = function (req, res) {
     tarlaSchema.find({ 'tarlaID': req.params.tarlaId }).then((responsee) => {
-        console.log("RES:: "+ responsee)
+        console.log("RES:: " + responsee)
         if (responsee && responsee.length === 1) {
             console.log("RES::SSSSS ")
             tarlaSchema.update({ 'tarla.tarlaID': req.params.tarlaId }, {
@@ -100,10 +97,8 @@ exports.TarlaKonumInsert = function (req, res) {
         }
     })
 };
-
 //** Urun Schema Ekleme */
 exports.urunSchemaInsert = function (req, res) {
-
     tarlaSchema.find({ 'tarlaID': req.params.tarlaId }).then((responsee) => {
         if (responsee && responsee.length === 1) {
             tarlaSchema.update({ 'tarla.tarlaID': req.params.tarlaId }, {
@@ -138,12 +133,7 @@ exports.urunSchemaInsert = function (req, res) {
             })
         }
     })
-
-
-
-
     console.log('Istek Gönderildi...')
-
 };
 
 exports.urunSchemaMasraf = function (req, res) {
@@ -195,7 +185,7 @@ exports.urunSchemaHasat = function (req, res) {
 };
 
 exports.getTarla = function (req, res) {
-    tarlaSchema.findOne({ 'tarla.tarlaID': req.params.tarlaId }).then((tarla) => {
+    tarlaSchema.findOne({ 'tarla.tarlaID': req.params.tarlaId },{ 'urunSheama': 0 }).then((tarla) => {
         tarla ? res.send(tarla) : res.send(false)
     })
 };
