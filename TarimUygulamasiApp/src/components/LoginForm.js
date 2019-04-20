@@ -1,103 +1,169 @@
 import React, { Component } from 'react';
-import { Alert, TextInput } from 'react-native';
-import Button from '../GlobalJS/Button';
-import Card from '../components/Card';
-import CardSection from '../components/CardSection';
-import Spinner from '../components/Spinner';
-import axios from 'axios';
+import {
+    StyleSheet,
+    TextInput,
+    Text,
+    View,
+    Alert,
+    ImageBackground,
+    Dimensions,
+    TouchableOpacity
+} from 'react-native';
+import { connect } from 'react-redux';
+import { Actions } from 'react-native-router-flux';
+const email = require('../images/email.png');
+const password = require('../images/password.png');
+const w = percent => (width * percent) / 100;
+const h = percent => (height * percent) / 100;
+
+import {
+    emailChanged,
+    passwordChanged,
+    loginUser } from '../actions';
+
+import { Spinner } from '../GlobalJS';
+
+let { height, width } = Dimensions.get('window');
 
 class LoginForm extends Component {
-  state ={ email: '', password: '', loading: false};
-  clickLogin() {
-
-    this.setState({ loading: true});
-    const { email , password } = this.state;
-    if( email === '' || password === ''){
-      this.setState({ loading: false});
-      Alert.alert(
-        'Mesaj',
-        'Boş Alanları Doldurunuz...',
-        [
-          { text: 'Tamam', onPress: () => null }
-        ]
-      );
-    }else{
-        const url = 'http://127.0.0.1:8082/userLogin/dln@gmail.com';
-        debugger
-        axios.get(url)
-            .then((user) => {
-                console.log(ambilData.data);
-                if(user){
-                    this.setState({ loggedIn: true });
-                    this.loginSucces.bind(this)
-                }else{
-                    this.setState({ loggedIn: false });
-                    this.loginFail.bind(this)
-                }
-            })
+    state ={
+        email: '',
+        password: '',
+        loading: false };
+    clickuyeOl() {
+        Actions.uyeOl();
     }
-  }
-  loginSucces() {
-    console.log('loginSucces');
-    this.setState({  email: '', password: '', loading: false});
-  }
-  loginFail() {
-    console.log('loginFail');
-    this.setState({ loading: false});
-    Alert.alert(
-      'Mesaj',
-      'Kullanıcı adı veya şifreniz hatalı',
-      [
-        { text: 'Tamam', onPress: () => null }
-      ]
-    );
-  }
-  renderButton() {
-    if(!this.state.loading){
-      return <Button onPress={this.clickLogin.bind(this)}> Giriş </Button>;
-    }else{
-      return <Spinner size="small" />;
+    clickLogin() {
+        const {
+            email,
+            password } = this.props;
+        this.props.loginUser({ email, password });
     }
-  }
-  render() {
-    const { inputStyle } = styles;
-    return (
-      <Card>
-        <CardSection>
-           <TextInput
-           placeholder = "E-Mail"
-           style={inputStyle}
-           value={this.state.email}
-           onChangeText={ email => this.setState({ email }) }
-           />
-        </CardSection>
 
-        <CardSection>
-           <TextInput
-           secureTextEntry
-           placeholder = "Şifre"
-           style={inputStyle}
-           value={this.state.password}
-           onChangeText={password => this.setState({ password })}
-           />
-        </CardSection>
+    loginSucces() {
+        console.log('başarılı');
+        this.setState({ loading: false });
+    }
 
-        <CardSection>
-           {this.renderButton()}
-        </CardSection>
-      </Card>
-    );
-  }
+    loginFail() {
+        console.log('Hatalı');
+        this.setState({ loading: false });
+        Alert.alert(
+            'Mesaj',
+            'Kullanıcı adı veya şifreniz hatalı!',
+            [
+                { text: 'Tamam', onPress: () => null }
+            ]
+        );
+    }
+    renderButton() {
+        if (!this.props.loading) {
+            return(
+                <View>
+                    <TouchableOpacity
+                        onPress={this.clickLogin.bind(this)}
+                        style={styles.buttonStyle}>
+                        <Text style={styles.textStyle}> Giriş Yap </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={this.clickuyeOl}
+                        style={styles.buttonStyle}>
+                        <Text style={styles.textStyle}>Üye Ol </Text>
+                    </TouchableOpacity>
+                </View>
+
+            )
+        }else{
+            return(
+                <Spinner size="small" />
+            )
+        }
+
+    }
+    render() {
+        const { TextInputStyle } = styles;
+        return (
+            <ImageBackground
+                source={require('../images/uyeOlTarla.jpg')}
+                style={styles.backgroundImage} >
+                <View
+                    style={styles.searchSection}>
+                        <TextInput
+                            placeholder="E-mail"
+                            style={TextInputStyle}
+                            value={this.props.email}
+                            onChangeText={email => this.props.emailChanged(email)}/>
+                        <TextInput
+                            secureTextEntry
+                            placeholder="Şifre"
+                            style={TextInputStyle}
+                            value={this.props.password}
+                            onChangeText={password => this.props.passwordChanged(password)}/>
+                    {this.renderButton()}
+                </View>
+            </ImageBackground>
+        );
+    }
 }
-const styles = {
-  inputStyle: {
-    color: '#000',
-    paddingRight: 5,
-    paddingLeft: 5,
-    fontSize: 18,
-    lineHeight: 23,
-    flex: 2
-  },
-
+const styles = StyleSheet.create({
+    backgroundImage: {
+        flex: 1,
+        width: width,
+        height: height,
+    },
+    textStyle: {
+        alignSelf: 'stretch',
+        color: '#fff',
+        fontSize: 16,
+        fontWeight: '600',
+        justifyContent: 'center',
+        alignItems: 'center',
+        position: 'relative'
+    },
+    TextInputStyle: {
+        alignSelf: 'stretch',
+        color: '#636564',
+        fontSize: 16,
+        fontWeight: '600',
+        backgroundColor: '#ffffff99',
+        borderRadius: 8,
+        borderWidth: 1,
+        borderColor: '#636564',
+        paddingTop: 10,
+        paddingBottom: 10,
+        marginTop:5,
+        marginLeft: 35,
+        marginRight: 35,
+        position: 'relative'
+    },
+    buttonStyle: {
+        backgroundColor: '#9ebc3899',
+        borderRadius: 8,
+        borderWidth: 1,
+        borderColor: '#636564',
+        paddingTop: 5,
+        paddingBottom: 5,
+        paddingLeft: 40,
+        paddingRight:50,
+        marginTop:5,
+        marginLeft: 80,
+        marginRight: 80,
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'row',
+        position: 'relative'
+    }
+});
+const mapStateToProps = ({ kimlikdogrulamaResponse }) => {
+    const {
+        email,
+        password,
+        loading } = kimlikdogrulamaResponse;
+    return {
+        email: 'frt@gmail.com',//girişte otomatık gelsin diye
+        password: 'frt123',
+        loading
+    };
 };
-export default LoginForm;
+
+export default connect(mapStateToProps,{emailChanged, passwordChanged, loginUser })(LoginForm);

@@ -17,6 +17,7 @@ const TarimAppUser = new Schema({
         }]
 });
 const tarlaSchema = new Schema({
+        tarlaID: String,
         tarla: [{
                 tarlaID: String,
                 tarlaKonum: [{
@@ -26,6 +27,7 @@ const tarlaSchema = new Schema({
                 }]
         }],
         urunSheama: [{
+                tarlaID: String,
                 urunAd: String,
                 urunMiktar: Number,
                 urunEklemeTarih: Date,
