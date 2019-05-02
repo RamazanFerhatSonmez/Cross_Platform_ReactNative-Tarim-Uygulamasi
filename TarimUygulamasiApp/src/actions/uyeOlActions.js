@@ -53,7 +53,6 @@ export const loginUseruye = ({ ad, soyad, email, password }) => {
         }
         else {
             const _post = ad + "/" + soyad + "/" + email + "/" + password + "/" + password
-            debugger
             axios.post('http://192.168.1.2:3033/SignIn/'+ _post)
                 .then(function (response) {
                     debugger

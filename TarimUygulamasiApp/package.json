@@ -13,10 +13,12 @@
     "mongoose": "^5.4.21",
     "nodemon": "^1.18.11",
     "react": "16.8.3",
+    "moment": "^2.24.0",
     "react-native": "0.59.3",
     "react-native-elements": "^1.1.0",
     "react-native-router-flux": "^4.0.6",
     "react-native-vector-icons": "^6.4.2",
+    "react-native-tooltip-menu": "^1.1.2",
     "react-redux": "^7.0.2",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0"

@@ -3,6 +3,10 @@ import { Scene, Router } from 'react-native-router-flux';
 import LoginForm from './components/LoginForm';
 import uyeOlForm from './components/uyeOlForm';
 import userProfil from './components/userProfil';
+import sezonPage from "./components/sezonPage";
+import SezonTarlaList from "./components/SezonTarlaList";
+import TarlaAdd from "./components/TarlaAdd";
+import { Actions } from 'react-native-router-flux';
 //import konumEkleMap from '../map/appOpen';
 
 class RouterComponent extends React.Component {
@@ -29,10 +33,24 @@ class RouterComponent extends React.Component {
                         key="uyeOl"
                         component={uyeOlForm}
                         title="Üye Ol" />
+                        <Scene
+                            key="profilform"
+                            component={userProfil}
+                            title="Ana Sayfa"/>
+                        <Scene
+                            key="TarlaAdd"
+                            component={TarlaAdd}
+                            title="Tarla Ekleme"/>
+                        <Scene
+                            key="sezonPage"
+                            component={sezonPage}
+                            title="Sezonlar"/>
                     <Scene
-                        key="profilform"
-                        component={userProfil}
-                        title="Ana Sayfa"/>
+                        onRight={() => Actions.TarlaAdd(this)}
+                        rightTitle="Yeni Tarla"
+                        key="tarlaPage"
+                        component={SezonTarlaList}
+                        title="Tarlalarım"/>
                 </Scene>
             </Router>
         );

@@ -1,11 +1,13 @@
 import { Alert } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import axios from 'axios';
-import { EMAIL_CHANGED,
-  PASSWORD_CHANGED,
-  LOGIN_USER,
-  LOGIN_USER_SUCCESS,
-  LOGIN_USER_FAIL } from './types';
+import {
+    EMAIL_CHANGED,
+    PASSWORD_CHANGED,
+    LOGIN_USER,
+    LOGIN_USER_SUCCESS,
+    LOGIN_USER_FAIL, TARLA_LIST, LOGIN_USER_FAIL_UYE
+} from './types';
 
 export const emailChanged = (email) => {
   return dispatch => {
@@ -31,10 +33,8 @@ export const loginUser = ({ email, password }) => {
     if (email === '' || password === '') {
        loginFailBos(dispatch);
     } else {
-      debugger
       axios.get('http://192.168.1.2:3033/userLogin/'+ email)
           .then(function (response) {
-            debugger
             if(response.data.KullaniciSifre === password){
                 loginSucces(dispatch, response.data)
             }else{
@@ -61,12 +61,14 @@ const loginFail = (dispatch) => {
   });
 };
 
-const loginSucces = (dispatch, user) => {
-  dispatch({
+export const loginSucces = (dispatch, user) => {
+  debugger
+    dispatch({
     type: LOGIN_USER_SUCCESS,
     payload: user
   });
-  Actions.profilform();
+  console.log("USER:: " + user);
+  Actions.sezonPage();
 };
 
 const loginFailBos = (dispatch) => {
@@ -81,3 +83,16 @@ const loginFailBos = (dispatch) => {
     type: LOGIN_USER_FAIL
   });
 };
+
+export const tarlaListClick = (talaList,sezonId) => {
+    debugger
+  const tarlaArray = {
+        tarlaList: talaList,
+        sezonId:sezonId}
+  return (dispatch) => {dispatch({
+    type: TARLA_LIST,
+    payload: tarlaArray
+  });
+  }
+};
+
