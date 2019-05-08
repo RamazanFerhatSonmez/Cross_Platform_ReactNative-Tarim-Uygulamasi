@@ -3,7 +3,8 @@ import {
     PASSWORD_CHANGED,
     LOGIN_USER,
     LOGIN_USER_SUCCESS,
-    LOGIN_USER_FAIL, TARLA_LIST
+    LOGIN_USER_FAIL, TARLA_LIST,
+    GET_TARLA_URUN_LIST
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -13,6 +14,7 @@ const INITIAL_STATE = {
     password: '',
     sezon: [],
     tarlaList:[],
+    urunList:[],
     loading: false
 };
 
@@ -27,13 +29,13 @@ export default (state = INITIAL_STATE, action) => {
             console.log("ACTION::" + action);
             return { ...state, loading: true };
         case LOGIN_USER_SUCCESS:
-            debugger
             return { ...state,kullaniciId: action.payload._id,sezon: action.payload.sezonTanimlama, loading: false};
         case LOGIN_USER_FAIL:
             return { ...state, loading: false, email: '', password: '' };
         case TARLA_LIST:
-            debugger
             return { ...state,sezonId: action.payload.sezonId,tarlaList: action.payload.tarlaList };
+        case GET_TARLA_URUN_LIST:
+            return {...state,urunList: action.payload.urunList};
         default:
             return state;
 

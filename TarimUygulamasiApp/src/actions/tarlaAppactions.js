@@ -6,9 +6,10 @@ import {
     PASSWORD_CHANGED,
     LOGIN_USER,
     LOGIN_USER_SUCCESS,
-    LOGIN_USER_FAIL, TARLA_LIST, LOGIN_USER_FAIL_UYE
+    LOGIN_USER_FAIL, TARLA_LIST, LOGIN_USER_FAIL_UYE,
+    GET_TARLA_URUN_LIST
 } from './types';
-
+import TarlaView from "../components/TarlaView";
 export const emailChanged = (email) => {
   return dispatch => {
     dispatch({
@@ -26,7 +27,26 @@ export const passwordChanged = (password) => {
     });
   };
 };
-
+export const getUrun = ({id}) => {
+  return (dispatch) => { axios.get('http://192.168.1.2:3033/getUrunShema/5cb9a26790b1ef3090bd9d3e')
+        .then(function (response) {
+            debugger
+            if((response.status === 200)) getTarlaUrun(dispatch,response.data[0].urunSheama);
+        })
+        .catch(function (error) {
+            loginFail(dispatch)
+        });}
+};
+export const getTarlaUrun = (dispatch,tarlaUrunList) => {
+    const urunArray = {
+        urunList:tarlaUrunList,
+    }
+    dispatch({
+        type: GET_TARLA_URUN_LIST,
+        payload: urunArray
+    });
+    Actions.TarlaView();
+};
 export const loginUser = ({ email, password }) => {
   return (dispatch) => {
     dispatch({ type: LOGIN_USER });
@@ -62,7 +82,6 @@ const loginFail = (dispatch) => {
 };
 
 export const loginSucces = (dispatch, user) => {
-  debugger
     dispatch({
     type: LOGIN_USER_SUCCESS,
     payload: user
@@ -85,10 +104,10 @@ const loginFailBos = (dispatch) => {
 };
 
 export const tarlaListClick = (talaList,sezonId) => {
-    debugger
   const tarlaArray = {
         tarlaList: talaList,
         sezonId:sezonId}
+        debugger
   return (dispatch) => {dispatch({
     type: TARLA_LIST,
     payload: tarlaArray

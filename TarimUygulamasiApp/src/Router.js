@@ -6,7 +6,9 @@ import userProfil from './components/userProfil';
 import sezonPage from "./components/sezonPage";
 import SezonTarlaList from "./components/SezonTarlaList";
 import TarlaAdd from "./components/TarlaAdd";
+import TarlaMapView from "./components/TarlaMapView";
 import { Actions } from 'react-native-router-flux';
+import TarlaView from "./components/TarlaView";
 //import konumEkleMap from '../map/appOpen';
 
 class RouterComponent extends React.Component {
@@ -46,11 +48,15 @@ class RouterComponent extends React.Component {
                             component={sezonPage}
                             title="Sezonlar"/>
                     <Scene
-                        onRight={() => Actions.TarlaAdd(this)}
-                        rightTitle="Yeni Tarla"
+                        key="TarlaView"
+                        component={TarlaView}/>
+                    <Scene
                         key="tarlaPage"
                         component={SezonTarlaList}
                         title="Tarlalarım"/>
+                    <Scene
+                        key="TarlaMapView"
+                        component={TarlaMapView} />
                 </Scene>
             </Router>
         );

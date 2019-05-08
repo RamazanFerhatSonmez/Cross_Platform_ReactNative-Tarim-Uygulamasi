@@ -25,7 +25,7 @@ exports.userLogin = function (req, res) {
             if (!user) {
                 res.send('Böyle bir id adresi sistemde kayıtlı değil.')
             } else {
-                console.log('Istek Gönderildi...')
+                console.log('Login Isteği Gönderildi...')
                 res.send(user)
             }
         })

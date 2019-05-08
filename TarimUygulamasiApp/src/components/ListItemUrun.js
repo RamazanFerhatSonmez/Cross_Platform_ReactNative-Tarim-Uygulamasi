@@ -2,33 +2,25 @@ import React, {Component} from 'react';
 import { Text , View, StyleSheet,Alert, ScrollView, TouchableWithoutFeedback } from 'react-native';
 import Moment from 'moment';
 import {Actions} from "react-native-router-flux";
-import axios from "axios";
-import {connect} from "react-redux";
-import {getUrun} from "../actions";
 
-
-class ListItemTarla extends  Component {
+class ListItemUrun extends  Component {
     tarlaClick() {
-        debugger
-        const { tarla_id } = this.props.tarla._id;
-        this.props.getUrun({tarla_id})
+        Actions.tarlaView()
     }
     render(){
-        const {tarlaAd,tarlaDekarBilgisi,tarlaOlusTarih } = this.props.tarla;
+        const {urunAd,urunMiktar,urunEklemeTarih } = this.props.urun;
         return(
-            <ScrollView>
                 <TouchableWithoutFeedback onPress={this.tarlaClick.bind(this)}>
                     <View>
                         <View style={styles.ViewStyleBugday}>
                             <Text style={styles.TextStyle}>
-                                {'tarlaAd: ' + tarlaAd} {"\n"}
-                                {'Tarla Dekar: ' + tarlaDekarBilgisi } {"\n"}
-                                {'Oluşturulduğu Tarih: ' + Moment({tarlaOlusTarih}).format('d MMM YYYY')}
+                                {'Urun Adı: ' + urunAd} {"\n"}
+                                {'Urun Miktarı: ' + urunMiktar } {"\n"}
+                                {'Oluşturulduğu Tarih: ' + Moment({urunEklemeTarih}).format('d MMM YYYY')}
                             </Text>
                         </View>
                     </View>
                 </TouchableWithoutFeedback>
-            </ScrollView>
         );
     }
 }
@@ -39,7 +31,7 @@ const styles = StyleSheet.create({
         position: 'relative'
     },
     ViewStyleBugday: {
-        backgroundColor: '#cfab7795',
+        backgroundColor: 'rgba(115,195,207,0.58)',
         borderRadius: 5,
         borderWidth: 1,
         borderColor: '#636564',
@@ -73,4 +65,4 @@ const styles = StyleSheet.create({
         padding: 8
     },
 });
-export default connect(null,{getUrun})(ListItemTarla);
+export default  ListItemUrun;
