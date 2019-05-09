@@ -15,7 +15,7 @@ class sezonPage extends Component {
     SezonAddPage() {
         const sezonId =  this.props.sezonId;
         const kullaniciId = this.props.kullaniciId;
-        this.props.tarlaAddClickTarlaList(kullaniciId,sezonId);
+        this.props.sezonAddClickTarlaList(kullaniciId,sezonId);
         Actions.TarlaAdd();
         console.log(this);
 

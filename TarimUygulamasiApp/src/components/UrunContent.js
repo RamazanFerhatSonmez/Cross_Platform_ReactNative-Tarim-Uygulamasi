@@ -5,78 +5,61 @@ import {
     TouchableOpacity,
     Animated,
     ScrollView,
-    Image,
     Dimensions
 } from "react-native";
 
-import UrunView from './UrunView';
-import TarlaMapView from './TarlaMapView';
+import UrunHasat from './UrunHasat';
+import UrunIslem from './UrunIslem';
+import UrunMasraf from './UrunMasraf';
 import {connect} from "react-redux";
 import {tarlaAdChanged, tarlaAddPost, tarlaDateChanged, tarlaDekarChanged} from "../actions";
 import {Actions} from "react-native-router-flux";
 
 const { width } = Dimensions.get("window");
 
-class TarlaView extends React.Component {
+class UrunContent extends React.Component {
 
     state = {
         active: 0,
-        xTabUrun: 0,
-        xTabKonum: 0,
+        xTabUrunMasraf: 0,
+        xTabUrunIslem: 0,
+        xTabUrunHasat: 0,
         translateX: new Animated.Value(0),
-        translateXTabUrun: new Animated.Value(0),
-        translateXTabKonum: new Animated.Value(width),
+        translateXTabUrunMasraf: new Animated.Value(0),
+        translateXTabUrunIslem: new Animated.Value(width),
+        translateXTabUrunHasat: new Animated.Value(width),
         translateY: -1000
     }
     handleSlide = type => {
-        let { xTabUrun,
-            xTabKonum,
+        let { xTabUrunMasraf,
+            xTabUrunIslem,
+            xTabUrunHasat,
             translateX,
             active ,
-            translateXTabUrun,
-            translateXTabKonum } = this.state;
+            translateXTabUrunMasraf,
+            translateXTabUrunIslem,
+            translateXTabUrunHasat} = this.state;
         Animated.spring(translateX, {
             toValue: type,
             duration: 100
         }).start()
-        if (active === 0) {
-            Animated.parallel([
-                Animated.spring(translateXTabUrun, {
-                    toValue: 0,
-                    duration: 100
-                }).start(),
-                Animated.spring(translateXTabKonum, {
-                    toValue: width,
-                    duration: 100
-                }).start()
-            ]);
-        } else {
-            Animated.parallel([
-                Animated.spring(translateXTabUrun, {
-                    toValue: -width,
-                    duration: 100
-                }).start(),
-                Animated.spring(translateXTabKonum, {
-                    toValue: 0,
-                    duration: 100
-                }).start()
-            ]);
-        }
     }
     render() {
-        let { xTabUrun,
-            xTabKonum,
+        let { xTabUrunMasraf,
+            xTabUrunIslem,
+            xTabUrunHasat,
             translateX,
             active ,
-            translateXTabUrun,
-            translateXTabKonum,
+            translateXTabUrunMasraf,
+            translateXTabUrunIslem,
+            translateXTabUrunHasat,
             translateY
         } = this.state;
         return (
             <View style={{flex:1}}>
                 <View
                     style={{
-                        width: '90%',
+                        width: '100%',
                         marginLeft: 'auto',
                         marginRight: 'auto'
                     }}
@@ -86,18 +69,16 @@ class TarlaView extends React.Component {
                             flexDirection: 'row',
                             marginTop: 0,
                             marginBottom: 20,
-                            height: 36,
-                            position: 'relative'
+                            height: 30,
                         }}
                     >
                         <Animated.View
                             style={{
                                 position: 'absolute',
-                                width: '50%',
+                                width: '33%',
                                 height: '100%',
                                 top: 0,
-                                left: 0,
-                                backgroundColor: '#5490FF',
+                                left: 2,
                                 borderRadius: 4,
                                 transform: [{
                                     translateX
@@ -109,34 +90,51 @@ class TarlaView extends React.Component {
                                 flex: 1,
                                 justifyContent: 'center',
                                 alignItems: 'center',
-                                borderWidth: 1,
+                                borderWidth: 2,
                                 borderRadius: 4,
                                 borderColor: '#5490FF',
-                                borderRightWidth: 0,
-                                borderTopRightRadius: 0,
-                                borderBottomRightRadius: 0
+                                borderRightWidth: 2,
+                                borderTopRightRadius: 2,
+                                borderBottomRightRadius: 2
                             }}
-                            onLayout={event => this.setState({xTabUrun: event.nativeEvent.layout.x})}
-                            onPress={() => this.setState({active: 0}, () => this.handleSlide(xTabUrun))}
+                            onLayout={event => this.setState({xTabUrunMasraf: event.nativeEvent.layout.x})}
+                            onPress={() => this.setState({active: 0}, () => this.handleSlide(translateXTabUrunMasraf))}
                         >
-                            <Text style={{ color: active === 0 ? '#fff' : '#5490FF'}}> Ürünler </Text>
+                            <Text style={{ color: active === 0 ? '#5490FF' : '#fff'}}> Ürün Masraf </Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={{
                                 flex: 1,
                                 justifyContent: 'center',
                                 alignItems: 'center',
-                                borderWidth: 1,
+                                borderWidth: 2,
                                 borderRadius: 4,
                                 borderColor: '#5490FF',
-                                borderLeftWidth: 0,
-                                borderTopLeftRadius: 0,
-                                borderBottomLeftRadius: 0
+                                borderLeftWidth: 2,
+                                borderTopLeftRadius: 2,
+                                borderBottomLeftRadius: 2
                             }}
-                            onLayout={event => this.setState({xTabKonum: event.nativeEvent.layout.x})}
-                            onPress={() => this.setState({active: 1}, () => this.handleSlide(xTabKonum))}
+                            onLayout={event => this.setState({xTabUrunIslem: event.nativeEvent.layout.x})}
+                            onPress={() => this.setState({active: 1}, () => this.handleSlide(translateXTabUrunIslem))}
                         >
-                            <Text style={{ color: active === 1 ? '#fff' : '#5490FF'}}> Tarla Konum </Text>
+                            <Text style={{ color: active === 1 ? '#5490FF' : '#fff'}}> İşlemler</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={{
+                                flex: 1,
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                borderWidth: 2,
+                                borderRadius: 4,
+                                borderColor: '#5490FF',
+                                borderRightWidth: 2,
+                                borderTopRightRadius: 2,
+                                borderBottomRightRadius: 2
+                            }}
+                            onLayout={event => this.setState({xTabUrunHasat: event.nativeEvent.layout.x})}
+                            onPress={() => this.setState({active: 2}, () => this.handleSlide(translateXTabUrunHasat))}
+                        >
+                            <Text style={{ color: active === 2 ? '#5490FF' : '#fff'}}> Urun Hasat </Text>
                         </TouchableOpacity>
                     </View>
                     <ScrollView>
@@ -146,7 +144,7 @@ class TarlaView extends React.Component {
                                 alignItems: "center",
                                 transform: [
                                     {
-                                        translateX: translateXTabUrun
+                                        translateX: translateXTabUrunHasat
                                     }
                                 ]
                             }}
@@ -156,7 +154,6 @@ class TarlaView extends React.Component {
                                 })
                             }
                         >
-                            <UrunView />
                         </Animated.View>
 
                         <Animated.View
@@ -165,7 +162,22 @@ class TarlaView extends React.Component {
                                 alignItems: "center",
                                 transform: [
                                     {
-                                        translateX: translateXTabKonum
+                                        translateX: translateXTabUrunIslem
+                                    },
+                                    {
+                                        translateY: -translateY
+                                    }
+                                ]
+                            }}
+                        >
+                        </Animated.View>
+                        <Animated.View
+                            style={{
+                                justifyContent: "center",
+                                alignItems: "center",
+                                transform: [
+                                    {
+                                        translateX: translateXTabUrunHasat
                                     },
                                     {
                                         translateY: -translateY
@@ -190,4 +202,4 @@ const mapStateToProps = ({ kimlikdogrulamaResponse }) => {
     };
 };
 
-export default connect(mapStateToProps,{tarlaAdChanged,tarlaDekarChanged,tarlaDateChanged,tarlaAddPost})(TarlaView);
+export default connect(mapStateToProps,{tarlaAdChanged,tarlaDekarChanged,tarlaDateChanged,tarlaAddPost})(UrunContent);

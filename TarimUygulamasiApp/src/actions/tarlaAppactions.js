@@ -27,19 +27,19 @@ export const passwordChanged = (password) => {
     });
   };
 };
-export const getUrun = ({id}) => {
-  return (dispatch) => { axios.get('http://192.168.1.2:3033/getUrunShema/5cb9a26790b1ef3090bd9d3e')
+export const getUrun = (id) => {
+  return (dispatch) => { axios.get('http://192.168.1.2:3033/getUrunShema/'+ id)
         .then(function (response) {
-            debugger
-            if((response.status === 200)) getTarlaUrun(dispatch,response.data[0].urunSheama);
+            if((response.status === 200)) getTarlaUrun(dispatch,response.data[0].urunSheama,id);
         })
         .catch(function (error) {
             loginFail(dispatch)
         });}
 };
-export const getTarlaUrun = (dispatch,tarlaUrunList) => {
+export const getTarlaUrun = (dispatch,tarlaUrunList,id) => {
     const urunArray = {
         urunList:tarlaUrunList,
+        tarlaId: id,
     }
     dispatch({
         type: GET_TARLA_URUN_LIST,
@@ -107,7 +107,6 @@ export const tarlaListClick = (talaList,sezonId) => {
   const tarlaArray = {
         tarlaList: talaList,
         sezonId:sezonId}
-        debugger
   return (dispatch) => {dispatch({
     type: TARLA_LIST,
     payload: tarlaArray

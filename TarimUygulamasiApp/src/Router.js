@@ -7,6 +7,8 @@ import sezonPage from "./components/sezonPage";
 import SezonTarlaList from "./components/SezonTarlaList";
 import TarlaAdd from "./components/TarlaAdd";
 import TarlaMapView from "./components/TarlaMapView";
+import UrunAdd from "./components/UrunAdd";
+import UrunContent from "./components/UrunContent";
 import { Actions } from 'react-native-router-flux';
 import TarlaView from "./components/TarlaView";
 //import konumEkleMap from '../map/appOpen';
@@ -57,6 +59,13 @@ class RouterComponent extends React.Component {
                     <Scene
                         key="TarlaMapView"
                         component={TarlaMapView} />
+                    <Scene
+                        key="UrunAdd"
+                        component={UrunAdd} />
+                    <Scene
+                        key="UrunContent"
+                        component={UrunContent}
+                    />
                 </Scene>
             </Router>
         );

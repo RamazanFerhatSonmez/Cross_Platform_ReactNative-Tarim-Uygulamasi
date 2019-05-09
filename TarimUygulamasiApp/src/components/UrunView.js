@@ -6,11 +6,19 @@ import {
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import {connect} from "react-redux";
+import { urunAddClickTarlaList } from "../actions";
 import ListItemUrun from './ListItemUrun';
 let { height, width } = Dimensions.get('window');
 class UrunView extends Component {
     componentWillMount() {
         this.sezonListDataSource(this.props);
+    }
+    UrunAddPage() {
+        const tarlaId =  this.props.tarlaId;
+        this.props.urunAddClickTarlaList(tarlaId);
+        Actions.UrunAdd();
+        console.log(this);
+
     }
     sezonListDataSource({urunArray}) {
         const ds = new ListView.DataSource({
@@ -29,7 +37,7 @@ class UrunView extends Component {
 
     render() {
         console.log("STATE::" + this.props.urunArray);
-        const { buttonStyle, textStyle } = styles;
+        const { buttonStyle, textStyle, urunAddButtonStyle, urunAddTextStyle } = styles;
         return (
             <View>
                 <ListView
@@ -37,6 +45,9 @@ class UrunView extends Component {
                     dataSource={this.dataSource}
                     renderRow={this.renderRow}
                 />
+                <TouchableOpacity onPress={this.UrunAddPage.bind(this)}  style={[urunAddButtonStyle, {backgroundColor:'rgba(38,192,255,0.58)'}]}>
+                    <Text style={urunAddTextStyle}> Urun Ekle </Text>
+                </TouchableOpacity>
             </View>
         );
     }
@@ -46,6 +57,23 @@ const styles = {
         flex: 1,
         width: width,
         height: height,
+    },
+    urunAddTextStyle: {
+        alignSelf: 'center',
+        color: '#0b090b',
+        fontSize: 16,
+        fontWeight: '600',
+        paddingTop: 10,
+        paddingBottom: 10
+    },
+    urunAddButtonStyle: {
+        alignSelf: 'stretch',
+        backgroundColor: 'rgba(11,9,11,0.98)',
+        borderRadius: 5,
+        borderWidth: 1,
+        marginTop: '100%',
+        marginLeft: '70%',
+        shadowOpacity:5
     },
     textStyle: {
         alignSelf: 'center',
@@ -69,11 +97,12 @@ const styles = {
         position: 'relative'
     }
 };
-const mapStateToProps = ({ kimlikdogrulamaResponse }) => {
+const mapStateToProps = ({ kimlikdogrulamaResponse,tarlaAddResponse }) => {
+    const tarlaId = kimlikdogrulamaResponse.tarlaId;
     const urunArray = _.map(kimlikdogrulamaResponse.urunList,(val) =>{
         return { ...val};
     });
-    return {urunArray};
+    return {urunArray,tarlaId};
 };
 
-export default connect(mapStateToProps,{ })(UrunView);
+export default connect(mapStateToProps,{ urunAddClickTarlaList })(UrunView);

@@ -55,7 +55,6 @@ export const loginUseruye = ({ ad, soyad, email, password }) => {
             const _post = ad + "/" + soyad + "/" + email + "/" + password + "/" + password
             axios.post('http://192.168.1.2:3033/SignIn/'+ _post)
                 .then(function (response) {
-                    debugger
                     if((response.status === 200)){
                         loginSucces(dispatch, email)
                     }else{

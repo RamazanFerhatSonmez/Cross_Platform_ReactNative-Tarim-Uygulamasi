@@ -35,7 +35,7 @@ export default (state = INITIAL_STATE, action) => {
         case TARLA_LIST:
             return { ...state,sezonId: action.payload.sezonId,tarlaList: action.payload.tarlaList };
         case GET_TARLA_URUN_LIST:
-            return {...state,urunList: action.payload.urunList};
+            return {...state,tarlaId:action.payload.tarlaId,urunList: action.payload.urunList};
         default:
             return state;
 

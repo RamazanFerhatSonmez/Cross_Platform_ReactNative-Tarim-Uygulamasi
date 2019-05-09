@@ -4,13 +4,14 @@ import Moment from 'moment';
 import {Actions} from "react-native-router-flux";
 
 class ListItemUrun extends  Component {
-    tarlaClick() {
-        Actions.tarlaView()
+    urunClick() {
+
+        Actions.UrunContent()
     }
     render(){
         const {urunAd,urunMiktar,urunEklemeTarih } = this.props.urun;
         return(
-                <TouchableWithoutFeedback onPress={this.tarlaClick.bind(this)}>
+                <TouchableWithoutFeedback onPress={this.urunClick.bind(this)}>
                     <View>
                         <View style={styles.ViewStyleBugday}>
                             <Text style={styles.TextStyle}>

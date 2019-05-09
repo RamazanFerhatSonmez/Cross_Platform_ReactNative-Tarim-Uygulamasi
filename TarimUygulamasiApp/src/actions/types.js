@@ -23,6 +23,11 @@ export const LOGIN_USER_FAIL = 'login_user_fail';
  export const TARLA_SUCCESS_FAIL_ADD = 'tarla_success_fail_add';
  export const TARLA_ADD_CLICK = 'tarla_add_click';
  export const GET_TARLA_URUN_LIST = 'get_tarla_urun_list';
+
+
+export const URUN_ADD_CLICK = 'urun_add_click';
+export const URUN_AD_CHANGED = 'urun_ad_changed';
+export const URUN_MIKTAR_CHANGED = 'urun_miktar_changed';
 // export const TARLA_EKLE_CHANGED = 'tarla_ekle_changed';
 
 // export const TARLA_CREATE = 'tarla_create';

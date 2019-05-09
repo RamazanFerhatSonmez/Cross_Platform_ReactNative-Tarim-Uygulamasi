@@ -10,33 +10,30 @@ import {
     Text } from 'react-native';
 import { connect } from 'react-redux';
 import {
-    tarlaAdChanged,
-    tarlaDekarChanged,
-    tarlaDateChanged,
-    tarlaAddPost,
+    urunAdChanged,
+    urunMiktarChanged,
+    urunAddPost,
 } from '../actions';
 import { Spinner } from '../GlobalJS';
 let { height, width } = Dimensions.get('window');
-class TarlaAdd extends Component {
+class UrunAdd extends Component {
     state = {
-        tarlaAd:'',
-        tarlaDekarBilgisi: '',
+        urunAd:'',
+        urunMiktar: '',
         loading: false
     };
-    clickTarlaAdd() {
-        this.props.tarlaDateChanged(Date.now());
+    clickUrunAdd() {
         const {
-            kullaniciId,
-            sezonId,
-            tarlaAd,
-            tarlaDekarBilgisi} = this.props;
-        this.props.tarlaAddPost({kullaniciId,sezonId,tarlaAd, tarlaDekarBilgisi});
+            tarlaId,
+            urunAd,
+            urunMiktar} = this.props;
+        this.props.urunAddPost({tarlaId,urunAd,urunMiktar});
     }
     renderButtontarla() {
         if (!this.props.loading) {
             return(
                 <TouchableOpacity
-                    onPress={this.clickTarlaAdd.bind(this)}
+                    onPress={this.clickUrunAdd.bind(this)}
                     style={styles.buttonStyle}>
                     <Text style={styles.textStyle}> Ekle </Text>
                 </TouchableOpacity>
@@ -57,16 +54,16 @@ class TarlaAdd extends Component {
                 style={styles.backgroundImage} >
                 <View style={{flex:1 ,marginTop: height/6}}>
                     <TextInput
-                        placeholder="Tarla Adı"
+                        placeholder="Urun Adı"
                         style={TextInputStyle}
-                        value={this.props.tarlaAd}
-                        onChangeText={tarlaAd => this.props.tarlaAdChanged(tarlaAd)}/>
+                        value={this.props.urunAd}
+                        onChangeText={urunAd => this.props.urunAdChanged(urunAd)}/>
 
                     <TextInput
-                        placeholder="Tarka Dekar Bilgisi"
+                        placeholder="Urun Miktari"
                         style={TextInputStyle}
-                        value={this.props.tarlaDekarBilgisi}
-                        onChangeText={tarlaDekarBilgisi => this.props.tarlaDekarChanged(tarlaDekarBilgisi)}/>
+                        value={this.props.urunMiktar}
+                        onChangeText={urunMiktar => this.props.urunMiktarChanged(urunMiktar)}/>
                     {this.renderButtontarla()}
                 </View>
             </ImageBackground>
@@ -123,19 +120,15 @@ const styles = StyleSheet.create({
     }
 });
 const mapStateToProps = ({ kimlikdogrulamaResponse,tarlaAddResponse }) => {
-   const {
-       kullaniciId,
-       sezonId,
-    } =  kimlikdogrulamaResponse;
     const {
-        tarlaAd,
-        tarlaDekarBilgisi} = tarlaAddResponse;
+        tarlaId,
+        urunAd,
+        urunMiktar} = kimlikdogrulamaResponse;
     return {
-        kullaniciId,
-        sezonId,
-        tarlaAd,
-        tarlaDekarBilgisi
+        tarlaId,
+        urunAd,
+        urunMiktar,
     };
 };
 
-export default connect(mapStateToProps,{tarlaAdChanged,tarlaDekarChanged,tarlaDateChanged,tarlaAddPost})(TarlaAdd);
+export default connect(mapStateToProps,{urunAdChanged,urunMiktarChanged,urunAddPost})(UrunAdd);

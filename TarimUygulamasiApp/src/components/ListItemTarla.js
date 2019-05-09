@@ -9,9 +9,8 @@ import {getUrun} from "../actions";
 
 class ListItemTarla extends  Component {
     tarlaClick() {
-        debugger
-        const { tarla_id } = this.props.tarla._id;
-        this.props.getUrun({tarla_id})
+        const tarla_id = this.props.tarla._id;
+        this.props.getUrun(tarla_id)
     }
     render(){
         const {tarlaAd,tarlaDekarBilgisi,tarlaOlusTarih } = this.props.tarla;
