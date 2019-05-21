@@ -32,7 +32,6 @@ class uyeOlForm extends Component {
         password: '',
         loading: false
     };
-
     clickLoginuye() {
         const {
             ad,
@@ -41,27 +40,6 @@ class uyeOlForm extends Component {
             password } = this.props;
         this.props.loginUseruye({ ad, soyad, email, password });
     }
-
-    loginSucces() {
-        console.log('başarılı');
-        this.setState({ loading: false });
-    }
-
-    loginFail() {
-        console.log('Hatalı');
-        this.setState({ loading: false });
-        Alert.alert(
-            'Mesaj',
-            'Bilgiler hatalı!',
-            [
-                {
-                    text: 'Tamam',
-                    onPress: () => null
-                }
-            ]
-        );
-    }
-
     renderButtonuye() {
         if (!this.props.loading) {
             return(

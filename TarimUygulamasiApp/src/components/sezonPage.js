@@ -2,24 +2,37 @@ import _ from 'lodash';
 import React, { Component } from 'react';
 import {
     Dimensions,
-    ListView, Text, TouchableOpacity, View
+    ListView, Text, TextInput, TouchableOpacity, View
 } from 'react-native';
-import { Actions } from 'react-native-router-flux';
+import Dialog from "react-native-dialog";
 import {connect} from "react-redux";
 import ListItem from './ListItem';
+import {sezonNameChanged, sezonNamePut} from '../actions';
 let { height, width } = Dimensions.get('window');
 class sezonPage extends Component {
     componentWillMount() {
         this.sezonListDataSource(this.props);
     }
-    SezonAddPage() {
-        const sezonId =  this.props.sezonId;
-        const kullaniciId = this.props.kullaniciId;
-        this.props.sezonAddClickTarlaList(kullaniciId,sezonId);
-        Actions.TarlaAdd();
-        console.log(this);
-
-    }
+    state = {
+        dialogVisible: false,
+        sezonName: '',
+    };
+    showDialog = () => {
+        this.setState({ dialogVisible: true });
+    };
+    handleCancel = () => {
+        this.setState({ dialogVisible: false });
+    };
+    handleSave = () => {
+        // The user has pressed the "Delete" button, so here you can do your own logic.
+        // ...Your logic
+        debugger
+        console.log(this)
+        const mail = this.props.mail;
+        const sezonName = this.props.sezonName;
+        this.props.sezonNamePut(mail,sezonName);
+        this.setState({ dialogVisible: false });
+    };
     sezonListDataSource({sezonArray}) {
         const ds = new ListView.DataSource({
             rowHasChanged: (r1, r2) => r1 !== r2
@@ -30,17 +43,7 @@ class sezonPage extends Component {
     renderRow(sezon){
         return <ListItem sezon={sezon}/>;
     }
-
-    clickuserProfil() {
-        Actions.userProfil();
-    }
-
-    clickLogout() {
-        Actions.girisYap()
-    }
-
     render() {
-        console.log("STATE::" + this.props.sezonArray);
         const { buttonStyle, textStyle, sezonAddButtonStyle, sezonAddTextStyle } = styles;
         return (
             <View>
@@ -49,12 +52,31 @@ class sezonPage extends Component {
                   dataSource={this.dataSource}
                   renderRow={this.renderRow}
                 />
-            <TouchableOpacity onPress={this.clickLogout}  style={[buttonStyle, {backgroundColor:'#ff000095'}]}>
-                <Text style={textStyle}> Çıkış Yap </Text>
-            </TouchableOpacity>
-                <TouchableOpacity onPress={this.SezonAddPage.bind(this)}  style={[sezonAddButtonStyle, {backgroundColor:'rgba(193,255,39,0.58)'}]}>
+                <TouchableOpacity onPress={this.showDialog.bind(this)}  style={[buttonStyle, {backgroundColor:'rgba(193,255,39,0.58)'}]}>
                     <Text style={sezonAddTextStyle}> Sezon Ekle </Text>
                 </TouchableOpacity>
+                <View>
+                    <Dialog.Container visible={this.state.dialogVisible}>
+                        <Dialog.Title>Sezon Ekleme</Dialog.Title>
+                        <Dialog.Input
+                            label="Sezon Adı"
+                            wrapperStyle={{
+                                alignSelf: 'stretch',
+                                color: '#636564',
+                                fontSize: 10,
+                                fontWeight: '100',
+                                backgroundColor: '#ffffff99',
+                                borderRadius: 8,
+                                borderWidth: 1,
+                                borderColor: '#636564',
+                                position: 'relative'}}
+                            value={this.props.sezonName}
+                            onChangeText={sezonName => this.props.sezonNameChanged(sezonName)}
+                        />
+                        <Dialog.Button label="Cancel" onPress={this.handleCancel} />
+                        <Dialog.Button label="Kaydet" onPress={this.handleSave.bind(this)} />
+                    </Dialog.Container>
+                </View>
             </View>
         );
     }
@@ -105,11 +127,10 @@ const styles = {
     }
 };
 const mapStateToProps = ({ kimlikdogrulamaResponse }) => {
-    const kullaniciId = kimlikdogrulamaResponse.kullaniciId;
+    const { sezonName,kullaniciId,mail} = kimlikdogrulamaResponse;
     const sezonArray = _.map(kimlikdogrulamaResponse.sezon,(val) =>{
         return { ...val};
     });
-    return {sezonArray,kullaniciId};
+    return {sezonArray,sezonName,kullaniciId,mail};
 };
-
-export default connect(mapStateToProps,{})(sezonPage);
+export default connect(mapStateToProps,{sezonNameChanged,sezonNamePut })(sezonPage);

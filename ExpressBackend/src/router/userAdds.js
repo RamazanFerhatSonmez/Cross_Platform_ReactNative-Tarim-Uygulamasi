@@ -12,7 +12,7 @@ router.get('/getUrunShema/:tarlaId', routerController.getUrunShema);  // tarlaya
 router.post('/SignIn/:Ad/:soyad/:email/:password/:passwordAgain', routerController.userSignIn);
 router.post('/TarlaKonumInsert/:tarlaId/:lat/:long/:acc', routerController.TarlaKonumInsert);
 //PUT
-router.put('/shemaInsert/:email/:sezonName', routerController.shemaInsert);
+router.put('/shemaSezonInsert/:email/:sezonName', routerController.shemaSezonInsert);
 router.put('/shemaTarlaInsert/:id/:sezonId/:tarlaAd/:dekar', routerController.shemaTarlaInsert);
 router.put('/urunSchemaInsert/:tarlaId/:urunName/:urunMiktar', routerController.urunSchemaInsert);
 router.put('/urunSchemaMasraf/:tarlaid/:urunSchmaId/:desc/:miktar/:masraf', routerController.urunSchemaMasraf);

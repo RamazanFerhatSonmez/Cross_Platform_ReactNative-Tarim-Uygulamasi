@@ -17,55 +17,68 @@ class RouterComponent extends React.Component {
 
     render() {
         return (
-            <Router
-                navigationBarStyle={styles.navBar}
-                titleStyle={styles.navBarTitle}
-                barButtonTextStyle={styles.barButtonTextStyle}
-                barButtonIconStyle={styles.barButtonIconStyle}>
-                <Scene
-                    key="kimlik">
+            <Router>
+                <Scene key="main">
                     <Scene
                         key="girisYap"
                         component={LoginForm}
-                        style={{
-                            color: '#000',
-                            fontSize: 16,
-                            fontWeight: '600',
-                        }}
-                        title="Giriş Sayfası" />
+                        title="Giriş Sayfası"
+                    />
                     <Scene
                         key="uyeOl"
                         component={uyeOlForm}
-                        title="Üye Ol" />
-                        <Scene
-                            key="profilform"
-                            component={userProfil}
-                            title="Ana Sayfa"/>
-                        <Scene
-                            key="TarlaAdd"
-                            component={TarlaAdd}
-                            title="Tarla Ekleme"/>
-                        <Scene
-                            key="sezonPage"
-                            component={sezonPage}
-                            title="Sezonlar"/>
+                        title="Üye Ol"
+                    />
                     <Scene
+                        key="profilform"
+                        component={userProfil}
+                        title="Ana Sayfa"
+                    />
+                    <Scene
+                        onRight={() => Actions.girisYap()}
+                        rightTitle="Cıkış Yap"
+                        key="TarlaAdd"
+                        component={TarlaAdd}
+                        title="Tarla Ekleme"
+                    />
+                    <Scene
+                        onRight={() => Actions.girisYap()}
+                        rightTitle="Cıkış Yap"
+                        key="sezonPage"
+                        component={sezonPage}
+                        title="Sezonlar"
+                    />
+                    <Scene
+                        onRight={() => Actions.girisYap()}
+                        rightTitle="Cıkış Yap"
                         key="TarlaView"
-                        component={TarlaView}/>
+                        component={TarlaView}
+                    />
                     <Scene
+                        onRight={() => Actions.girisYap()}
+                        rightTitle="Cıkış Yap"
                         key="tarlaPage"
                         component={SezonTarlaList}
-                        title="Tarlalarım"/>
+                        title="Tarlalarım"
+                    />
                     <Scene
+                        onRight={() => Actions.girisYap()}
+                        rightTitle="Cıkış Yap"
                         key="TarlaMapView"
-                        component={TarlaMapView} />
+                        component={TarlaMapView}
+                    />
                     <Scene
+                        onRight={() => Actions.girisYap()}
+                        rightTitle="Cıkış Yap"
                         key="UrunAdd"
-                        component={UrunAdd} />
+                        component={UrunAdd}
+                    />
                     <Scene
+                        onRight={() => Actions.girisYap()}
+                        rightTitle="Cıkış Yap"
                         key="UrunContent"
                         component={UrunContent}
-                    />
+                     />
                 </Scene>
             </Router>
         );

@@ -35,6 +35,7 @@ const tarlaSchema = new Schema({
                         islemAciklama: String,
                         islemMiktari: Number,
                         islemMasraf: Number,
+                        islemMasrafTarih:Date
                 }],
                 islemTuru: [{
                         islemAd: String,

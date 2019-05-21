@@ -140,8 +140,6 @@ const loginSuccesUrunAdd = (dispatch) => {
     );
     Actions.TarlaView();
 };
-
-
 const loginFailBos = (dispatch) => {
     Alert.alert(
         'Mesaj',

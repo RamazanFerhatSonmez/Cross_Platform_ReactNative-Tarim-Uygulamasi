@@ -11,11 +11,6 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
-const email = require('../images/email.png');
-const password = require('../images/password.png');
-const w = percent => (width * percent) / 100;
-const h = percent => (height * percent) / 100;
-
 import {
     emailChanged,
     passwordChanged,

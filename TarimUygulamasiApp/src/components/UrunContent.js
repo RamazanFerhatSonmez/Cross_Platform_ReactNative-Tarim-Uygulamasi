@@ -15,6 +15,8 @@ import {connect} from "react-redux";
 import {tarlaAdChanged, tarlaAddPost, tarlaDateChanged, tarlaDekarChanged} from "../actions";
 import {Actions} from "react-native-router-flux";
 
+
+
 const { width } = Dimensions.get("window");
 
 class UrunContent extends React.Component {
@@ -154,6 +156,7 @@ class UrunContent extends React.Component {
                                 })
                             }
                         >
+                            <UrunMasraf/>
                         </Animated.View>
 
                         <Animated.View
@@ -163,13 +166,11 @@ class UrunContent extends React.Component {
                                 transform: [
                                     {
                                         translateX: translateXTabUrunIslem
-                                    },
-                                    {
-                                        translateY: -translateY
                                     }
                                 ]
                             }}
                         >
+                            <UrunIslem/>
                         </Animated.View>
                         <Animated.View
                             style={{
@@ -178,13 +179,11 @@ class UrunContent extends React.Component {
                                 transform: [
                                     {
                                         translateX: translateXTabUrunHasat
-                                    },
-                                    {
-                                        translateY: -translateY
                                     }
                                 ]
                             }}
                         >
+                            <UrunHasat/>
                         </Animated.View>
                     </ScrollView>
                 </View>

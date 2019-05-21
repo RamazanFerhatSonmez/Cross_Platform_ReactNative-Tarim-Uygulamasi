@@ -1,32 +1,28 @@
 import React, {Component} from 'react';
 import { Text , View, StyleSheet,Alert, ScrollView, TouchableWithoutFeedback } from 'react-native';
 import Moment from 'moment';
-import { getUrunContent} from "../actions";
 import {Actions} from "react-native-router-flux";
-import {connect} from "react-redux";
 
-class ListItemUrun extends  Component {
+class ListItemUrunMasraf extends  Component {
     urunClick() {
-        debugger
-        console.log(this)
-        const urunContent = this.props.urun;
-        this.props.getUrunContent(urunContent);
-            Actions.UrunContent()
+
+
     }
     render(){
-        const {urunAd,urunMiktar,urunEklemeTarih } = this.props.urun;
+        const {islemAciklama,islemMiktari,islemMasraf, islemMasrafTarih } = this.props.urunMasraf;
         return(
-                <TouchableWithoutFeedback onPress={this.urunClick.bind(this)}>
-                    <View>
-                        <View style={styles.ViewStyleBugday}>
-                            <Text style={styles.TextStyle}>
-                                {'Urun Adı: ' + urunAd} {"\n"}
-                                {'Urun Miktarı: ' + urunMiktar } {"\n"}
-                                {'Oluşturulduğu Tarih: ' + Moment({urunEklemeTarih}).format('d MMM YYYY')}
-                            </Text>
-                        </View>
+            <TouchableWithoutFeedback onPress={this.urunClick.bind(this)}>
+                <View>
+                    <View style={styles.ViewStyleBugday}>
+                        <Text style={styles.TextStyle}>
+                            {'Açıklama : ' + islemAciklama} {"\n"}
+                            {'Miktar: ' + islemMiktari } {"\n"}
+                            {'Masraf (TL): ' + islemMasraf } {"\n"}
+                            {'Tarih: ' + Moment({islemMasrafTarih}).format('d MMM YYYY')}
+                        </Text>
                     </View>
-                </TouchableWithoutFeedback>
+                </View>
+            </TouchableWithoutFeedback>
         );
     }
 }
@@ -71,4 +67,4 @@ const styles = StyleSheet.create({
         padding: 8
     },
 });
-export default connect(null,{getUrunContent})(ListItemUrun);
+export default  ListItemUrunMasraf;

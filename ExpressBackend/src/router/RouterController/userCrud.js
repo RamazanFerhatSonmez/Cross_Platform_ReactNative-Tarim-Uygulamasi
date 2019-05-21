@@ -30,8 +30,8 @@ exports.userLogin = function (req, res) {
             }
         })
 };
-exports.shemaInsert = function (req, res) {
-    console.log('Istek Gönderildi...')
+exports.shemaSezonInsert = function (req, res) {
+    console.log('Sezon Ekleme Isteği Gönderildi...')
     userSchema.update({ KullaniciMail: req.params.email }, {
         '$push': {
             'sezonTanimlama': [{
@@ -144,6 +144,7 @@ exports.urunSchemaMasraf = function (req, res) {
                 'islemAciklama': req.params.desc,
                 'islemMiktari': req.params.miktar,
                 'islemMasraf': req.params.masraf,
+                "islemMasrafTarih": Date.now()
             }]
         }
     }, function (err, response) {

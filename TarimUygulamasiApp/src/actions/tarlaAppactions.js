@@ -7,9 +7,12 @@ import {
     LOGIN_USER,
     LOGIN_USER_SUCCESS,
     LOGIN_USER_FAIL, TARLA_LIST, LOGIN_USER_FAIL_UYE,
-    GET_TARLA_URUN_LIST
+    GET_TARLA_URUN_LIST,
+    SEZON_NAME_CHANGED,
+    SEZON_NAME_SAVE,
+    GET_TARLA_URUN_CONTENT
 } from './types';
-import TarlaView from "../components/TarlaView";
+//import TarlaView from "../components/TarlaView";
 export const emailChanged = (email) => {
   return dispatch => {
     dispatch({
@@ -18,7 +21,37 @@ export const emailChanged = (email) => {
     });
   };
 };
-
+export const sezonNameChanged = (sezonName) => {
+    debugger
+    const sezon_Name = {sezonName} ;
+    return dispatch => {
+        dispatch({
+            type: SEZON_NAME_CHANGED,
+            payload: sezon_Name
+        });
+    };
+}
+export const sezonNamePut = (mail, sezonName) => {
+    return (dispatch) => {
+        dispatch({ type: SEZON_NAME_SAVE });
+        if (mail === '' || sezonName === '') {
+            loginFailBos(dispatch);
+        } else {
+            axios.put('http://192.168.1.2:3033/shemaSezonInsert/'+ mail + "/" + sezonName)
+                .then(function (response) {
+                    debugger
+                    if(response.status === 200){
+                        getSezon(dispatch,mail)
+                    }else{
+                        loginFail(dispatch)
+                    }
+                })
+                .catch(function (error) {
+                    loginFail(dispatch)
+                });
+        }
+    };
+}
 export const passwordChanged = (password) => {
   return (dispatch) => {
     dispatch({
@@ -36,6 +69,17 @@ export const getUrun = (id) => {
             loginFail(dispatch)
         });}
 };
+export const getUrunContent = (urunContent) => {
+    return (dispatch) => {
+        const urunArray = {
+            urunList:urunContent,
+        }
+        dispatch({
+            type: GET_TARLA_URUN_CONTENT,
+            payload: urunArray
+        });
+    }
+}
 export const getTarlaUrun = (dispatch,tarlaUrunList,id) => {
     const urunArray = {
         urunList:tarlaUrunList,
@@ -67,7 +111,6 @@ export const loginUser = ({ email, password }) => {
     }
   };
 };
-
 const loginFail = (dispatch) => {
   Alert.alert(
     'Mesaj',
@@ -80,7 +123,6 @@ const loginFail = (dispatch) => {
     type: LOGIN_USER_FAIL
   });
 };
-
 export const loginSucces = (dispatch, user) => {
     dispatch({
     type: LOGIN_USER_SUCCESS,
@@ -89,7 +131,6 @@ export const loginSucces = (dispatch, user) => {
   console.log("USER:: " + user);
   Actions.sezonPage();
 };
-
 const loginFailBos = (dispatch) => {
   Alert.alert(
     'Mesaj',
@@ -102,7 +143,6 @@ const loginFailBos = (dispatch) => {
     type: LOGIN_USER_FAIL
   });
 };
-
 export const tarlaListClick = (talaList,sezonId) => {
   const tarlaArray = {
         tarlaList: talaList,
@@ -112,5 +152,23 @@ export const tarlaListClick = (talaList,sezonId) => {
     payload: tarlaArray
   });
   }
+};
+const getSezon = (dispatch,mail) => {
+    if (mail === '') {
+        loginFailBos(dispatch);
+    } else {
+        axios.get('http://192.168.1.2:3033/userLogin/'+ mail)
+            .then(function (response) {
+                debugger
+                if(response.status === 200){
+                    loginSucces(dispatch,response.data);
+                }else{
+                    loginFail(dispatch)
+                }
+            })
+            .catch(function (error) {
+                loginFail(dispatch)
+            });
+    }
 };
 

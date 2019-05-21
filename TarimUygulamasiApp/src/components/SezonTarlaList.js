@@ -35,11 +35,6 @@ class SezonTarlaList extends Component {
     clickuserProfil() {
         Actions.userProfil();
     }
-
-    clickLogout() {
-        Actions.girisYap()
-    }
-
     render() {
         console.log("STATE::" + this.props.sezonArray);
         const { buttonStyle, textStyle, tarlaAddButtonStyle, tarlaAddTextStyle } = styles;
@@ -50,10 +45,7 @@ class SezonTarlaList extends Component {
                     dataSource={this.dataSource}
                     renderRow={this.renderRow}
                 />
-                <TouchableOpacity onPress={this.clickLogout}  style={[buttonStyle, {backgroundColor:'rgba(255,252,38,0.58)'}]}>
-                    <Text style={textStyle}> Çıkış Yap </Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={this.TarlaAddPage.bind(this)}  style={[tarlaAddButtonStyle, {backgroundColor:'rgba(193,255,39,0.58)'}]}>
+                <TouchableOpacity onPress={this.TarlaAddPage.bind(this)}  style={[buttonStyle, {backgroundColor:'rgba(193,255,39,0.58)'}]}>
                     <Text style={tarlaAddTextStyle}> Tarla Ekle </Text>
                 </TouchableOpacity>
             </View>
@@ -87,8 +79,8 @@ const styles = {
         backgroundColor: 'rgba(11,9,11,0.98)',
         borderRadius: 5,
         borderWidth: 1,
-        marginTop: '70%',
-        marginLeft: '70%',
+        marginTop: '80%',
+        marginLeft: '80%',
         shadowOpacity:5
     },
     buttonStyle: {
