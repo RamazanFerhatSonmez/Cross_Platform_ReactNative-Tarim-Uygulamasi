@@ -14,6 +14,24 @@ export const LOGIN_USER_FAIL = 'login_user_fail';
  export const LOGIN_USER_SUCCESS_UYE = 'login_user_succes_uye';
  export const LOGIN_USER_FAIL_UYE = 'login_user_fail_uye';
 
+ export const SEZON_NAME_CHANGED = 'sezon_name_chamged';
+ export const SEZON_NAME_SAVE = 'sezon_name_save';
+
+ export const TARLA_LIST = 'tarla_list';
+ export const TARLA_AD_CHANGED = 'tarla_ad_changed';
+ export const TARLA_DEKAR_CHANGED = 'tarla_dekar_changed';
+ export const TARLA_DATE_CHANGED = 'tarla_date_changed';
+ export const TARLA_POST_SUCCESS = 'tarla_post_success';
+ export const TARLA_SUCCESS_FAIL_ADD = 'tarla_success_fail_add';
+ export const TARLA_ADD_CLICK = 'tarla_add_click';
+ export const GET_TARLA_URUN_LIST = 'get_tarla_urun_list';
+
+
+export const URUN_ADD_CLICK = 'urun_add_click';
+export const URUN_AD_CHANGED = 'urun_ad_changed';
+export const URUN_MIKTAR_CHANGED = 'urun_miktar_changed';
+
+export const GET_TARLA_URUN_CONTENT = 'get_tarla_urun_content';
 // export const TARLA_EKLE_CHANGED = 'tarla_ekle_changed';
 
 // export const TARLA_CREATE = 'tarla_create';

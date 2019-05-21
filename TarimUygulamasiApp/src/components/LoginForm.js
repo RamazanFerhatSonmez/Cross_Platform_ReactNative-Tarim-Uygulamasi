@@ -11,11 +11,6 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
-const email = require('../images/email.png');
-const password = require('../images/password.png');
-const w = percent => (width * percent) / 100;
-const h = percent => (height * percent) / 100;
-
 import {
     emailChanged,
     passwordChanged,
@@ -36,26 +31,10 @@ class LoginForm extends Component {
     clickLogin() {
         const {
             email,
-            password } = this.props;
+            password,sezon } = this.props;
         this.props.loginUser({ email, password });
     }
 
-    loginSucces() {
-        console.log('başarılı');
-        this.setState({ loading: false });
-    }
-
-    loginFail() {
-        console.log('Hatalı');
-        this.setState({ loading: false });
-        Alert.alert(
-            'Mesaj',
-            'Kullanıcı adı veya şifreniz hatalı!',
-            [
-                { text: 'Tamam', onPress: () => null }
-            ]
-        );
-    }
     renderButton() {
         if (!this.props.loading) {
             return(
@@ -158,10 +137,11 @@ const mapStateToProps = ({ kimlikdogrulamaResponse }) => {
     const {
         email,
         password,
+        sezon,
         loading } = kimlikdogrulamaResponse;
     return {
-        email: 'frt@gmail.com',//girişte otomatık gelsin diye
-        password: 'frt123',
+        email: 'frht@gmail.com',//girişte otomatık gelsin diye
+        password: 'frht12',
         loading
     };
 };

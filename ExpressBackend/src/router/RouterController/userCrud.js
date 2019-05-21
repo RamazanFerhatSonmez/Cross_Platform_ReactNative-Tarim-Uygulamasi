@@ -25,13 +25,13 @@ exports.userLogin = function (req, res) {
             if (!user) {
                 res.send('Böyle bir id adresi sistemde kayıtlı değil.')
             } else {
-                console.log('Istek Gönderildi...')
+                console.log('Login Isteği Gönderildi...')
                 res.send(user)
             }
         })
 };
-exports.shemaInsert = function (req, res) {
-    console.log('Istek Gönderildi...')
+exports.shemaSezonInsert = function (req, res) {
+    console.log('Sezon Ekleme Isteği Gönderildi...')
     userSchema.update({ KullaniciMail: req.params.email }, {
         '$push': {
             'sezonTanimlama': [{
@@ -45,7 +45,7 @@ exports.shemaInsert = function (req, res) {
     });
 };
 exports.shemaTarlaInsert = function (req, res) {
-    console.log('Istek Gönderildi...')
+    console.log('Tarla Ekleme Istegi Gönderildi...')
     userSchema.update({ _id: req.params.id, 'sezonTanimlama._id': req.params.sezonId }, {
         '$push': {
             'sezonTanimlama.$.tarla': [{
@@ -112,7 +112,7 @@ exports.urunSchemaInsert = function (req, res) {
                 }
             }, function (err, response) {
                 if (err) return next(err);
-                (response && response.ok === 1 && response.nModified === 1 && response.n === 1) ? res.send(response) : res.send(false);
+                (response && (response.ok && response.nModified && response.n ) === 1) ? res.send(response) : res.send(false);
             });
         } else {
             let tarlaSchemas = new tarlaSchema({
@@ -144,6 +144,7 @@ exports.urunSchemaMasraf = function (req, res) {
                 'islemAciklama': req.params.desc,
                 'islemMiktari': req.params.miktar,
                 'islemMasraf': req.params.masraf,
+                "islemMasrafTarih": Date.now()
             }]
         }
     }, function (err, response) {
@@ -192,21 +193,24 @@ exports.getTarla = function (req, res) {
 //router.get('/getSezon/:email', userController.getSezon);
 exports.getSezon = function (req, res) {
     let query = { KullaniciMail: req.params.email };
-    userSchema.find(query).then((data) => {
+    let IdentifyingFutureAreas = { '_id':0,'AdSoyad':0,'KullaniciMail':0,'KullaniciSifre':0,'sezonTanimlama.tarla':0}
+    userSchema.find(query,IdentifyingFutureAreas).then((data) => {
         data ? res.send(data) : res.send(false);
     })
 }
 //router.get('/getSezonTarla/:sezonId', userController.getSezonTarla);
 exports.getSezonTarla = function (req, res) {
     let query = { 'sezonTanimlama._id': req.params.sezonId }
-    userSchema.findOne(query, { 'sezonTanimlama.tarla': 1 }).then((data) => {
+    let IdentifyingFutureAreas = { 'sezonTanimlama.tarla': 1, '_id':0 }
+    userSchema.findOne(query,IdentifyingFutureAreas).then((data) => {
         data ? res.json(data) : res.send(false);
     })
 }
 //router.get('/getTarlaKonum/:tarlaId', userController.getTarlaKonum);
 exports.getTarlaKonum = function (req, res) {
     let query = { 'tarla.tarlaID': req.params.tarlaId }
-    tarlaSchema.find(query, { 'tarla.tarlaKonum': 1 }).then((data) => {
+    let IdentifyingFutureAreas = { 'tarla.tarlaKonum': 1 }
+    tarlaSchema.find( query , IdentifyingFutureAreas).then((data) => {
         data ? res.send(data) : res.send(false);
     })
 }

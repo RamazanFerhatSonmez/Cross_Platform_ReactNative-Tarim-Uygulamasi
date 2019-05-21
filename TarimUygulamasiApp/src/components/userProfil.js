@@ -6,6 +6,7 @@ import {
     ImageBackground,
     View,
     TouchableOpacity } from 'react-native';
+import { Actions } from 'react-native-router-flux';
 import {connect} from "react-redux";
 import {emailChanged, loginUser, passwordChanged} from "../actions";
 let { height, width } = Dimensions.get('window');
@@ -24,6 +25,9 @@ class userProfil extends Component {
     }
     clickToplamMaliyet() {
        // Actions.tarlaListMaliyet();
+    }
+    clickLogout() {
+        Actions.girisYap()
     }
 
     render() {
@@ -59,7 +63,7 @@ class userProfil extends Component {
                         style={[buttonStyle, {backgroundColor:'#9dcff495'}]}>
                         <Text style={textStyle}> Hava Durumu </Text>
                     </TouchableOpacity>
-                    <TouchableOpacity  style={[buttonStyle, {backgroundColor:'#ff000095'}]}>
+                    <TouchableOpacity onPress={this.clickLogout}  style={[buttonStyle, {backgroundColor:'#ff000095'}]}>
                         <Text style={textStyle}> Çıkış Yap </Text>
                     </TouchableOpacity>
                 </View>

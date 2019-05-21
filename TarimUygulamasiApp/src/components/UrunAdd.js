@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-
 import {
     TextInput,
     Alert,
@@ -9,83 +8,63 @@ import {
     Dimensions,
     TouchableOpacity,
     Text } from 'react-native';
-
 import { connect } from 'react-redux';
-
 import {
-    adChangeduye,
-    soyadChangeduye,
-    emailChangeduye,
-    passwordChangeduye,
-    loginUseruye
+    urunAdChanged,
+    urunMiktarChanged,
+    urunAddPost,
 } from '../actions';
-
 import { Spinner } from '../GlobalJS';
-
 let { height, width } = Dimensions.get('window');
-
-class uyeOlForm extends Component {
+class UrunAdd extends Component {
     state = {
-        ad: '',
-        soyad: '',
-        email: '',
-        password: '',
+        urunAd:'',
+        urunMiktar: '',
         loading: false
     };
-    clickLoginuye() {
+    clickUrunAdd() {
         const {
-            ad,
-            soyad,
-            email,
-            password } = this.props;
-        this.props.loginUseruye({ ad, soyad, email, password });
+            tarlaId,
+            urunAd,
+            urunMiktar} = this.props;
+        this.props.urunAddPost({tarlaId,urunAd,urunMiktar});
     }
-    renderButtonuye() {
+    renderButtontarla() {
         if (!this.props.loading) {
             return(
-            <TouchableOpacity
-                onPress={this.clickLoginuye.bind(this)}
-                style={styles.buttonStyle}>
-                <Text style={styles.textStyle}> Kaydet </Text>
-            </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={this.clickUrunAdd.bind(this)}
+                    style={styles.buttonStyle}>
+                    <Text style={styles.textStyle}> Ekle </Text>
+                </TouchableOpacity>
             )
         }else {
             return (
                 <Spinner size="small" />
-                )
+            )
         }
     }
 
     render() {
         const { TextInputStyle } = styles;
+        console.log(this);
         return (
             <ImageBackground
                 source={require('../images/uyeOlTarla.jpg')}
                 style={styles.backgroundImage} >
                 <View style={{flex:1 ,marginTop: height/6}}>
                     <TextInput
-                        placeholder="Ad"
+                        placeholder="Urun Adı"
                         style={TextInputStyle}
-                        value={this.props.ad}
-                        onChangeText={ad => this.props.adChangeduye(ad)}/>
+                        value={this.props.urunAd}
+                        onChangeText={urunAd => this.props.urunAdChanged(urunAd)}/>
 
                     <TextInput
-                        placeholder="Soyad"
+                        placeholder="Urun Miktari"
                         style={TextInputStyle}
-                        value={this.props.soyad}
-                        onChangeText={soyad => this.props.soyadChangeduye(soyad)}/>
-                    <TextInput
-                        placeholder="E-mail"
-                        style={TextInputStyle}
-                        value={this.props.email}
-                        onChangeText={email => this.props.emailChangeduye(email)}/>
-                    <TextInput
-                        secureTextEntry
-                        placeholder="Şifre"
-                        style={TextInputStyle}
-                        value={this.props.password}
-                        onChangeText={password => this.props.passwordChangeduye(password)}/>
-                    {this.renderButtonuye()}
+                        value={this.props.urunMiktar}
+                        onChangeText={urunMiktar => this.props.urunMiktarChanged(urunMiktar)}/>
+                    {this.renderButtontarla()}
                 </View>
             </ImageBackground>
         );
@@ -140,20 +119,16 @@ const styles = StyleSheet.create({
         position: 'relative'
     }
 });
-const mapStateToProps = ({ uyeOlResponse }) => {
+const mapStateToProps = ({ kimlikdogrulamaResponse,tarlaAddResponse }) => {
     const {
-        ad,
-        soyad,
-        email,
-        password,
-        loading } = uyeOlResponse;
+        tarlaId,
+        urunAd,
+        urunMiktar} = kimlikdogrulamaResponse;
     return {
-        ad,
-        soyad,
-        email,
-        password,
-        loading
+        tarlaId,
+        urunAd,
+        urunMiktar,
     };
 };
 
-export default connect(mapStateToProps,{adChangeduye,soyadChangeduye,emailChangeduye,passwordChangeduye,loginUseruye})(uyeOlForm);
+export default connect(mapStateToProps,{urunAdChanged,urunMiktarChanged,urunAddPost})(UrunAdd);

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-
 import {
     TextInput,
     Alert,
@@ -9,83 +8,66 @@ import {
     Dimensions,
     TouchableOpacity,
     Text } from 'react-native';
-
 import { connect } from 'react-redux';
-
 import {
-    adChangeduye,
-    soyadChangeduye,
-    emailChangeduye,
-    passwordChangeduye,
-    loginUseruye
+    tarlaAdChanged,
+    tarlaDekarChanged,
+    tarlaDateChanged,
+    tarlaAddPost,
 } from '../actions';
-
 import { Spinner } from '../GlobalJS';
-
 let { height, width } = Dimensions.get('window');
-
-class uyeOlForm extends Component {
+class TarlaAdd extends Component {
     state = {
-        ad: '',
-        soyad: '',
-        email: '',
-        password: '',
+        tarlaAd:'',
+        tarlaDekarBilgisi: '',
         loading: false
     };
-    clickLoginuye() {
+    clickTarlaAdd() {
+        this.props.tarlaDateChanged(Date.now());
         const {
-            ad,
-            soyad,
-            email,
-            password } = this.props;
-        this.props.loginUseruye({ ad, soyad, email, password });
+            kullaniciId,
+            sezonId,
+            tarlaAd,
+            tarlaDekarBilgisi} = this.props;
+        this.props.tarlaAddPost({kullaniciId,sezonId,tarlaAd, tarlaDekarBilgisi});
     }
-    renderButtonuye() {
+    renderButtontarla() {
         if (!this.props.loading) {
             return(
-            <TouchableOpacity
-                onPress={this.clickLoginuye.bind(this)}
-                style={styles.buttonStyle}>
-                <Text style={styles.textStyle}> Kaydet </Text>
-            </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={this.clickTarlaAdd.bind(this)}
+                    style={styles.buttonStyle}>
+                    <Text style={styles.textStyle}> Ekle </Text>
+                </TouchableOpacity>
             )
         }else {
             return (
                 <Spinner size="small" />
-                )
+            )
         }
     }
 
     render() {
         const { TextInputStyle } = styles;
+        console.log(this);
         return (
             <ImageBackground
                 source={require('../images/uyeOlTarla.jpg')}
                 style={styles.backgroundImage} >
                 <View style={{flex:1 ,marginTop: height/6}}>
                     <TextInput
-                        placeholder="Ad"
+                        placeholder="Tarla Adı"
                         style={TextInputStyle}
-                        value={this.props.ad}
-                        onChangeText={ad => this.props.adChangeduye(ad)}/>
+                        value={this.props.tarlaAd}
+                        onChangeText={tarlaAd => this.props.tarlaAdChanged(tarlaAd)}/>
 
                     <TextInput
-                        placeholder="Soyad"
+                        placeholder="Tarka Dekar Bilgisi"
                         style={TextInputStyle}
-                        value={this.props.soyad}
-                        onChangeText={soyad => this.props.soyadChangeduye(soyad)}/>
-                    <TextInput
-                        placeholder="E-mail"
-                        style={TextInputStyle}
-                        value={this.props.email}
-                        onChangeText={email => this.props.emailChangeduye(email)}/>
-                    <TextInput
-                        secureTextEntry
-                        placeholder="Şifre"
-                        style={TextInputStyle}
-                        value={this.props.password}
-                        onChangeText={password => this.props.passwordChangeduye(password)}/>
-                    {this.renderButtonuye()}
+                        value={this.props.tarlaDekarBilgisi}
+                        onChangeText={tarlaDekarBilgisi => this.props.tarlaDekarChanged(tarlaDekarBilgisi)}/>
+                    {this.renderButtontarla()}
                 </View>
             </ImageBackground>
         );
@@ -140,20 +122,20 @@ const styles = StyleSheet.create({
         position: 'relative'
     }
 });
-const mapStateToProps = ({ uyeOlResponse }) => {
+const mapStateToProps = ({ kimlikdogrulamaResponse,tarlaAddResponse }) => {
+   const {
+       kullaniciId,
+       sezonId,
+    } =  kimlikdogrulamaResponse;
     const {
-        ad,
-        soyad,
-        email,
-        password,
-        loading } = uyeOlResponse;
+        tarlaAd,
+        tarlaDekarBilgisi} = tarlaAddResponse;
     return {
-        ad,
-        soyad,
-        email,
-        password,
-        loading
+        kullaniciId,
+        sezonId,
+        tarlaAd,
+        tarlaDekarBilgisi
     };
 };
 
-export default connect(mapStateToProps,{adChangeduye,soyadChangeduye,emailChangeduye,passwordChangeduye,loginUseruye})(uyeOlForm);
+export default connect(mapStateToProps,{tarlaAdChanged,tarlaDekarChanged,tarlaDateChanged,tarlaAddPost})(TarlaAdd);
