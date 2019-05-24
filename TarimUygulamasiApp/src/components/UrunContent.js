@@ -7,20 +7,12 @@ import {
     ScrollView,
     Dimensions
 } from "react-native";
-
 import UrunHasat from './UrunHasat';
 import UrunIslem from './UrunIslem';
 import UrunMasraf from './UrunMasraf';
 import {connect} from "react-redux";
-import {tarlaAdChanged, tarlaAddPost, tarlaDateChanged, tarlaDekarChanged} from "../actions";
-import {Actions} from "react-native-router-flux";
-
-
-
 const { width } = Dimensions.get("window");
-
 class UrunContent extends React.Component {
-
     state = {
         active: 0,
         xTabUrunMasraf: 0,
@@ -31,6 +23,20 @@ class UrunContent extends React.Component {
         translateXTabUrunIslem: new Animated.Value(width),
         translateXTabUrunHasat: new Animated.Value(width),
         translateY: -1000
+    }
+    pageViewContent() {
+        debugger
+        switch (this.state.active) {
+            case 0:
+                return <UrunMasraf />;
+            case 1:
+                return <UrunIslem />;
+            case 2:
+                return <UrunHasat />;
+            default:
+                return <UrunMasraf />;
+
+        }
     }
     handleSlide = type => {
         let { xTabUrunMasraf,
@@ -45,6 +51,52 @@ class UrunContent extends React.Component {
             toValue: type,
             duration: 100
         }).start()
+        if (active === 0) {
+            Animated.parallel([
+                Animated.spring(translateXTabUrunMasraf, {
+                    toValue: 0,
+                    duration: 100
+                }).start(),
+                Animated.spring(translateXTabUrunIslem, {
+                    toValue: width,
+                    duration: 100
+                }).start(),
+                Animated.spring(translateXTabUrunHasat, {
+                    toValue: width,
+                    duration: 100
+                }).start()
+            ]);
+        } else if(active === 1) {
+            Animated.parallel([
+                Animated.spring(translateXTabUrunMasraf, {
+                    toValue: width,
+                    duration: 100
+                }).start(),
+                Animated.spring(translateXTabUrunIslem, {
+                    toValue: 0,
+                    duration: 100
+                }).start(),
+                Animated.spring(translateXTabUrunHasat, {
+                    toValue: width,
+                    duration: 100
+                }).start()
+            ]);
+        }else if(active === 2){
+            Animated.parallel([
+                Animated.spring(translateXTabUrunMasraf, {
+                    toValue: width,
+                    duration: 100
+                }).start(),
+                Animated.spring(translateXTabUrunIslem, {
+                    toValue: width,
+                    duration: 100
+                }).start(),
+                Animated.spring(translateXTabUrunHasat, {
+                    toValue: 0,
+                    duration: 100
+                }).start()
+            ]);
+        }
     }
     render() {
         let { xTabUrunMasraf,
@@ -140,51 +192,7 @@ class UrunContent extends React.Component {
                         </TouchableOpacity>
                     </View>
                     <ScrollView>
-                        <Animated.View
-                            style={{
-                                justifyContent: "center",
-                                alignItems: "center",
-                                transform: [
-                                    {
-                                        translateX: translateXTabUrunHasat
-                                    }
-                                ]
-                            }}
-                            onLayout={event =>
-                                this.setState({
-                                    translateY: event.nativeEvent.layout.height
-                                })
-                            }
-                        >
-                            <UrunMasraf/>
-                        </Animated.View>
-
-                        <Animated.View
-                            style={{
-                                justifyContent: "center",
-                                alignItems: "center",
-                                transform: [
-                                    {
-                                        translateX: translateXTabUrunIslem
-                                    }
-                                ]
-                            }}
-                        >
-                            <UrunIslem/>
-                        </Animated.View>
-                        <Animated.View
-                            style={{
-                                justifyContent: "center",
-                                alignItems: "center",
-                                transform: [
-                                    {
-                                        translateX: translateXTabUrunHasat
-                                    }
-                                ]
-                            }}
-                        >
-                            <UrunHasat/>
-                        </Animated.View>
+                        {this.pageViewContent()}
                     </ScrollView>
                 </View>
             </View>
@@ -201,4 +209,4 @@ const mapStateToProps = ({ kimlikdogrulamaResponse }) => {
     };
 };
 
-export default connect(mapStateToProps,{tarlaAdChanged,tarlaDekarChanged,tarlaDateChanged,tarlaAddPost})(UrunContent);
+export default connect(mapStateToProps,{})(UrunContent);

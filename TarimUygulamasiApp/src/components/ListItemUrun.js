@@ -8,10 +8,11 @@ import {connect} from "react-redux";
 class ListItemUrun extends  Component {
     urunClick() {
         debugger
-        console.log(this)
-        const urunContent = this.props.urun;
-        this.props.getUrunContent(urunContent);
-            Actions.UrunContent()
+        return new Promise((resolve, reject) => {
+            const urunContent = this.props.urun;
+            let _resolve = this.props.getUrunContent(urunContent);
+            _resolve === undefined ? resolve( Actions.UrunContent()) : reject('Error');
+        })
     }
     render(){
         const {urunAd,urunMiktar,urunEklemeTarih } = this.props.urun;
