@@ -1,4 +1,6 @@
 # Cross Platform İle React-Native Tarım Uygulaması 
+![1_QY5S4senfFh-mIViSi5A_Q](https://user-images.githubusercontent.com/32498472/60442783-7b1f9800-9c22-11e9-89b5-c348776b221f.png)
+
 # Uygulamanın Login Ekranı
 ![giriş](https://user-images.githubusercontent.com/32498472/60434886-dba5d980-9c10-11e9-9d34-9c66b9514cd0.PNG)
 
