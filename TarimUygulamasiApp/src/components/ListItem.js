@@ -3,7 +3,6 @@ import { Text , View, StyleSheet,Alert, ScrollView, TouchableWithoutFeedback } f
 import Moment from 'moment';
 import {tarlaListClick} from '../actions';
 import {connect} from "react-redux";
-import {TARLA_LIST} from "../actions/types";
 import {Actions} from "react-native-router-flux";
 class ListItem extends  Component {
     sezonClick() {

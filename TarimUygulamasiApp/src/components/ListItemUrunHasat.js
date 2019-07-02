@@ -15,7 +15,7 @@ class ListItemUrunHasat extends  Component {
                 <View>
                     <View style={styles.ViewStyleBugday}>
                         <Text style={styles.TextStyle}>
-                            {'Birim Hasat : ' + birimHasat} {"\n"}
+                            {'Birim Hasat(TL) : ' + birimHasat} {"\n"}
                             {'Birim Hasat Miktarı: ' + hasatMiktari } {"\n"}
                             {'Tarih: ' + Moment({hasatTarihi}).format('d MMM YYYY')}
                         </Text>

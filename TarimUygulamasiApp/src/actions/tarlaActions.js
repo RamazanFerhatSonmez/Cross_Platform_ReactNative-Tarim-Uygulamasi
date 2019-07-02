@@ -37,9 +37,9 @@ export const tarlaDateChanged = (tarlaOlusTarih) => {
         });
     };
 }
-export const tarlaAddClickTarlaList = ({kullaniciId,sezonId}) => {
-    const tarlaArray  = {
-        kullaniciId:kullaniciId,
+export const tarlaAddClickTarlaList = ({ kullaniciId, sezonId }) => {
+    const tarlaArray = {
+        kullaniciId: kullaniciId,
         sezonId: sezonId,
     };
     return (dispatch) => {
@@ -49,19 +49,19 @@ export const tarlaAddClickTarlaList = ({kullaniciId,sezonId}) => {
         });
     };
 };
-export const tarlaAddPost = ({kullaniciId,sezonId,tarlaAd, tarlaDekarBilgisi}) => {
+export const tarlaAddPost = ({ kullaniciId, sezonId, tarlaAd, tarlaDekarBilgisi }) => {
     return (dispatch) => {
         dispatch({ type: TARLA_POST_SUCCESS });
-        if (tarlaAd === '' || tarlaDekarBilgisi === '') {
+        if (tarlaAd === '' || tarlaDekarBilgisi === '' || tarlaAd === undefined || tarlaDekarBilgisi === undefined) {
             loginFailBos(dispatch);
         }
         else {
             const _post = kullaniciId + "/" + sezonId + "/" + tarlaAd + "/" + tarlaDekarBilgisi
-            axios.put('http://192.168.1.2:3033/shemaTarlaInsert/'+ _post)
+            axios.put('http://192.168.1.2:3030/shemaTarlaInsert/' + _post)
                 .then(function (response) {
-                    if((response.status === 200)){
+                    if ((response.status === 200)) {
                         loginSucces(dispatch)
-                    }else{
+                    } else {
                         loginFail(dispatch)
                     }
                 })
@@ -97,7 +97,7 @@ export const urunMiktarChanged = (urunMiktar) => {
         });
     };
 }
-export const urunAddClickTarlaList = ({tarlaId}) => {
+export const urunAddClickTarlaList = ({ tarlaId }) => {
     const urun = {
         tarlaId: tarlaId
     }
@@ -108,7 +108,7 @@ export const urunAddClickTarlaList = ({tarlaId}) => {
         });
     };
 };
-export const urunAddPost = ({tarlaId,urunAd,urunMiktar}) => {
+export const urunAddPost = ({ tarlaId, urunAd, urunMiktar }) => {
     return (dispatch) => {
         dispatch({ type: URUN_POST_SUCCESS });
         if (urunAd === '' || urunMiktar === '' || tarlaId === '') {
@@ -116,11 +116,11 @@ export const urunAddPost = ({tarlaId,urunAd,urunMiktar}) => {
         }
         else {
             const _post = tarlaId + "/" + urunAd + "/" + urunMiktar
-            axios.put('http://192.168.1.2:3033/urunSchemaInsert/'+ _post)
+            axios.put('http://192.168.1.2:3030/urunSchemaInsert/' + _post)
                 .then(function (response) {
-                    if((response.status === 200)){
+                    if ((response.status === 200)) {
                         loginSuccesUrunAdd(dispatch)
-                    }else{
+                    } else {
                         loginFail(dispatch)
                     }
                 })

@@ -32,6 +32,19 @@ export const URUN_AD_CHANGED = 'urun_ad_changed';
 export const URUN_MIKTAR_CHANGED = 'urun_miktar_changed';
 
 export const GET_TARLA_URUN_CONTENT = 'get_tarla_urun_content';
+
+
+export const BIRIM_HASAT_CHANGED = 'birim_hasat_changed';
+export const BIRIM_HASAT_MIKTAR_CHANGED = 'birim_hasat_miktar_changed';
+export const ISLEM_ADI_CHANGED = 'islem_adi_changed';
+export const ISLEM_MASRAFI_CHANGED = 'islem_masrafi_changed';
+export const MASRAF_ACIKLAMA_CHANGED = 'masraf_aciklama_changed';
+export const MASRAF_MIKTAR_CHANGED = 'masraf_miktar_changed';
+export const MASRAF_CHANGED = 'masraf_changed';
+export const URUN_MASRAF_SAVE = 'urun_masraf_save';
+export const URUN_ISLEM_SAVE = 'urun_islem_save';
+export const URUN_HASAT_SAVE = 'urun_hasat_save';
+
 // export const TARLA_EKLE_CHANGED = 'tarla_ekle_changed';
 
 // export const TARLA_CREATE = 'tarla_create';

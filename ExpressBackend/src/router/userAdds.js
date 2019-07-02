@@ -19,4 +19,6 @@ router.put('/urunSchemaMasraf/:tarlaid/:urunSchmaId/:desc/:miktar/:masraf', rout
 router.put('/urunSchemaHasat/:tarlaid/:urunSchmaId/:birim/:hasatmiktar', routerController.urunSchemaHasat);
 router.put('/urunSchemaTur/:tarlaid/:urunSchmaId/:name/:masraf', routerController.urunSchemaTur);
 //DELETE
+router.get('/shemmaSezonDelete/:Id/:sezonId', routerController.shemaSezonDelete);
+router.get('/shemaTarlaDelete/:tarlaId', routerController.shemaTarlaDelete);
 module.exports = router;

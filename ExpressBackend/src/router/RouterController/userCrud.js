@@ -21,14 +21,14 @@ exports.userSignIn = function (req, res) {
 };
 //router.get('/userLogin:KullaniciMail', user_controller.userLogin);
 exports.userLogin = function (req, res) {
-        userSchema.findOne({ KullaniciMail: req.params.email }).then((user) => {
-            if (!user) {
-                res.send('Böyle bir id adresi sistemde kayıtlı değil.')
-            } else {
-                console.log('Login Isteği Gönderildi...')
-                res.send(user)
-            }
-        })
+    userSchema.findOne({ KullaniciMail: req.params.email }).then((user) => {
+        if (!user) {
+            res.send('Böyle bir id adresi sistemde kayıtlı değil.')
+        } else {
+            console.log('Login Isteği Gönderildi...')
+            res.send(user)
+        }
+    })
 };
 exports.shemaSezonInsert = function (req, res) {
     console.log('Sezon Ekleme Isteği Gönderildi...')
@@ -112,7 +112,7 @@ exports.urunSchemaInsert = function (req, res) {
                 }
             }, function (err, response) {
                 if (err) return next(err);
-                (response && (response.ok && response.nModified && response.n ) === 1) ? res.send(response) : res.send(false);
+                (response && (response.ok && response.nModified && response.n) === 1) ? res.send(response) : res.send(false);
             });
         } else {
             let tarlaSchemas = new tarlaSchema({
@@ -186,23 +186,23 @@ exports.urunSchemaHasat = function (req, res) {
 };
 
 exports.getTarla = function (req, res) {
-    tarlaSchema.findOne({ 'tarla.tarlaID': req.params.tarlaId },{ 'urunSheama': 0 }).then((tarla) => {
+    tarlaSchema.findOne({ 'tarla.tarlaID': req.params.tarlaId }, { 'urunSheama': 0 }).then((tarla) => {
         tarla ? res.send(tarla) : res.send(false)
     })
 };
 //router.get('/getSezon/:email', userController.getSezon);
 exports.getSezon = function (req, res) {
     let query = { KullaniciMail: req.params.email };
-    let IdentifyingFutureAreas = { '_id':0,'AdSoyad':0,'KullaniciMail':0,'KullaniciSifre':0,'sezonTanimlama.tarla':0}
-    userSchema.find(query,IdentifyingFutureAreas).then((data) => {
+    let IdentifyingFutureAreas = { '_id': 0, 'AdSoyad': 0, 'KullaniciMail': 0, 'KullaniciSifre': 0, 'sezonTanimlama.tarla': 0 }
+    userSchema.find(query, IdentifyingFutureAreas).then((data) => {
         data ? res.send(data) : res.send(false);
     })
 }
 //router.get('/getSezonTarla/:sezonId', userController.getSezonTarla);
 exports.getSezonTarla = function (req, res) {
     let query = { 'sezonTanimlama._id': req.params.sezonId }
-    let IdentifyingFutureAreas = { 'sezonTanimlama.tarla': 1, '_id':0 }
-    userSchema.findOne(query,IdentifyingFutureAreas).then((data) => {
+    let IdentifyingFutureAreas = { 'sezonTanimlama.tarla': 1, '_id': 0 }
+    userSchema.findOne(query, IdentifyingFutureAreas).then((data) => {
         data ? res.json(data) : res.send(false);
     })
 }
@@ -210,7 +210,7 @@ exports.getSezonTarla = function (req, res) {
 exports.getTarlaKonum = function (req, res) {
     let query = { 'tarla.tarlaID': req.params.tarlaId }
     let IdentifyingFutureAreas = { 'tarla.tarlaKonum': 1 }
-    tarlaSchema.find( query , IdentifyingFutureAreas).then((data) => {
+    tarlaSchema.find(query, IdentifyingFutureAreas).then((data) => {
         data ? res.send(data) : res.send(false);
     })
 }
@@ -221,3 +221,56 @@ exports.getUrunShema = function (req, res) {
         data ? res.send(data) : res.send(false);
     })
 }
+exports.shemaSezonDelete = function (req, res) {
+    //_id: req.params.id, 'sezonTanimlama._id': req.params.sezonId 
+
+    userSchema.remove({ _id: req.params.Id, 'sezonTanimlama._id': req.params.sezonId }).then(() => {
+        console.log(res)
+    });
+    // userSchema.remove({ _id : req.params.Id }).then(() => {
+    //         console.log(res)sdsdfg
+    //     });
+}
+exports.shemaTarlaDelete = function (req, res) {
+    //_id: req.params.id, 'sezonTanimlama._id': req.params.sezonId 
+
+    // userSchema.delete({ _id: req.params.Id, 'sezonTanimlama._id': req.params.sezonId,'sezonTanimlama.tarla._id': req.params.tarlaId }).then(() => {
+    //     console.log(res)
+    // });
+    userSchema.findOneAndDelete(req.params.tarlaId,function (ex) {
+            if (ex) 
+                console.log(ex);
+            else 
+                console.log("Tamam");
+            
+    });
+    // userSchema.update({ _id: req.params.Id, 'sezonTanimlama._id': req.params.sezonId,'sezonTanimlama.tarla._id': req.params.tarlaId }, {
+    //         '$push': {
+    //             'sezonTanimlama.$.tarla': [null]
+    //         }
+    //     }, function (err, response) {
+    //         if (err) return next(err);
+    //         response.ok === 1 ? res.send(true) : res.send(false);
+    // });
+
+
+    // userSchema.findAndModify(
+    //     {
+    //       query: { _id: req.params.Id, 'sezonTanimlama._id': req.params.sezonId,'sezonTanimlama.tarla._id': req.params.tarlaId},
+    //       remove: true
+    //     }
+    //  )
+}
+// exports.shemaSezonDelete = function (req, res) {
+//    userSchema.find(req.params.Id).remove( (err, todo) => {
+//     // As always, handle any potential errors:
+//     if (err) return res.status(500).send(err);
+//     const response = {
+//         message: "Sezon successfully deleted",
+//     };
+//     return res.status(200).send(response);
+// });
+
+// }
+
+

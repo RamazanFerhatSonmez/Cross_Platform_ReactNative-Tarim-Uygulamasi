@@ -25,7 +25,6 @@ class UrunContent extends React.Component {
         translateY: -1000
     }
     pageViewContent() {
-        debugger
         switch (this.state.active) {
             case 0:
                 return <UrunMasraf />;
@@ -96,6 +95,21 @@ class UrunContent extends React.Component {
                     duration: 100
                 }).start()
             ]);
+        }else if(active === 3){
+             Animated.parallel([
+                Animated.spring(translateXTabUrunMasraf, {
+                    toValue: width,
+                    duration: 100
+                }).start(),
+                Animated.spring(translateXTabUrunIslem, {
+                    toValue: 0,
+                    duration: 100
+                }).start(),
+                Animated.spring(translateXTabUrunHasat, {
+                    toValue: width,
+                    duration: 100
+                }).start()
+            ]);
         }
     }
     render() {
@@ -110,7 +124,7 @@ class UrunContent extends React.Component {
             translateY
         } = this.state;
         return (
-            <View style={{flex:1}}>
+            <View style={{flex:1,backgroundColor:  '#FDFFF8'}}>
                 <View
                     style={{
                         width: '100%',
@@ -140,6 +154,8 @@ class UrunContent extends React.Component {
                             }}
                         />
                         <TouchableOpacity
+                            onLayout={event => this.setState({xTabUrunMasraf: event.nativeEvent.layout.x})}
+                            onPress={() => this.setState({active: 0}, () => this.handleSlide(translateXTabUrunMasraf))}
                             style={{
                                 flex: 1,
                                 justifyContent: 'center',
@@ -147,16 +163,17 @@ class UrunContent extends React.Component {
                                 borderWidth: 2,
                                 borderRadius: 4,
                                 borderColor: '#5490FF',
+                               backgroundColor: active === 0 ? '#6FC6FF' : '#FDFFF8' ,
                                 borderRightWidth: 2,
                                 borderTopRightRadius: 2,
                                 borderBottomRightRadius: 2
                             }}
-                            onLayout={event => this.setState({xTabUrunMasraf: event.nativeEvent.layout.x})}
-                            onPress={() => this.setState({active: 0}, () => this.handleSlide(translateXTabUrunMasraf))}
                         >
-                            <Text style={{ color: active === 0 ? '#5490FF' : '#fff'}}> Ürün Masraf </Text>
+                            <Text style={{ color: '#0b090b'}}> Ürün Masraf </Text>
                         </TouchableOpacity>
                         <TouchableOpacity
+                            onLayout={event => this.setState({xTabUrunIslem: event.nativeEvent.layout.x})}
+                            onPress={() => this.setState({active: 1}, () => this.handleSlide(translateXTabUrunIslem))}
                             style={{
                                 flex: 1,
                                 justifyContent: 'center',
@@ -164,16 +181,17 @@ class UrunContent extends React.Component {
                                 borderWidth: 2,
                                 borderRadius: 4,
                                 borderColor: '#5490FF',
+                                backgroundColor: active === 1 ? '#6FC6FF' : '#FDFFF8',
                                 borderLeftWidth: 2,
                                 borderTopLeftRadius: 2,
                                 borderBottomLeftRadius: 2
                             }}
-                            onLayout={event => this.setState({xTabUrunIslem: event.nativeEvent.layout.x})}
-                            onPress={() => this.setState({active: 1}, () => this.handleSlide(translateXTabUrunIslem))}
                         >
-                            <Text style={{ color: active === 1 ? '#5490FF' : '#fff'}}> İşlemler</Text>
+                            <Text style={{ color: '#0b070a'}}> İşlemler</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
+                            onLayout={event => this.setState({xTabUrunHasat: event.nativeEvent.layout.x})}
+                            onPress={() => this.setState({active: 2}, () => this.handleSlide(translateXTabUrunHasat))}
                             style={{
                                 flex: 1,
                                 justifyContent: 'center',
@@ -181,14 +199,31 @@ class UrunContent extends React.Component {
                                 borderWidth: 2,
                                 borderRadius: 4,
                                 borderColor: '#5490FF',
+                                backgroundColor: active === 2 ? '#6FC6FF' : '#FDFFF8',
                                 borderRightWidth: 2,
                                 borderTopRightRadius: 2,
                                 borderBottomRightRadius: 2
                             }}
-                            onLayout={event => this.setState({xTabUrunHasat: event.nativeEvent.layout.x})}
-                            onPress={() => this.setState({active: 2}, () => this.handleSlide(translateXTabUrunHasat))}
                         >
-                            <Text style={{ color: active === 2 ? '#5490FF' : '#fff'}}> Urun Hasat </Text>
+                            <Text style={{ color: '#0b090b'}}> Urun Hasat </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            onLayout={event => this.setState({xTabUrunIslem: event.nativeEvent.layout.x})}
+                            onPress={() => this.setState({active: 3}, () => this.handleSlide(translateXTabUrunIslem))}
+                            style={{
+                                flex: 1,
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                borderWidth: 2,
+                                borderRadius: 4,
+                                borderColor: '#5490FF',
+                                backgroundColor: active === 3 ? '#6FC6FF' : '#FDFFF8',
+                                borderLeftWidth: 2,
+                                borderTopLeftRadius: 2,
+                                borderBottomLeftRadius: 2
+                            }}
+                        >
+                            <Text style={{ color: '#0b070a'}}>Gelir-Gider</Text>
                         </TouchableOpacity>
                     </View>
                     <ScrollView>

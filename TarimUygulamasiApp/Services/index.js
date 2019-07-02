@@ -4,7 +4,7 @@ import AuthRouter from './routes';
 import mongoose from 'mongoose';
 import cors from 'cors';
 
-mongoose.connect('mongodb://localhost/TarimUygDb', { useMongoClient: true });
+mongoose.connect('mongodb://127.0.0.1/TarimUygDb', { useMongoClient: true });
 mongoose.Promise = global.Promise;
 
 const app = express();

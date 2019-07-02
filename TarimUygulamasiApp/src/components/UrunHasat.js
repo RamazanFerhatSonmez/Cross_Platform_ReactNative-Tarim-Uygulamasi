@@ -6,17 +6,35 @@ import {
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import {connect} from "react-redux";
-import { tarlaAddClickTarlaList } from "../actions";
+import { tarlaAddClickTarlaList,birimHasatChanged,birimHasatMiktarChanged,hasatPut } from "../actions";
 import ListItemUrunHasat from './ListItemUrunHasat';
+import Dialog from "react-native-dialog";
 let { height, width } = Dimensions.get('window');
 class UrunHasat extends Component {
     componentWillMount() {
         this.hasatListDataSource(this.props);
     }
-    urunHasatAdd() {
+    state = {
+        dialogVisible: false,
+        sezonName: '',
+    };
+    urunHasatAdd = () => {
+        this.setState({ dialogVisible: true });
+    };
+    handleCancel = () => {
+        this.setState({ dialogVisible: false });
+    };
+    handleSave = () => {
+        // The user has pressed the "Delete" button, so here you can do your own logic.
+        // ...Your logic
+        console.log(this)
+        const hasatData = {
 
+        }
+        this.props.hasatPut(hasatData);
+        this.setState({ dialogVisible: false });
 
-    }
+    };
     hasatListDataSource({HasatArray}) {
         const ds = new ListView.DataSource({
             rowHasChanged: (r1, r2) => r1 !== r2
@@ -33,7 +51,7 @@ class UrunHasat extends Component {
     }
     render() {
         console.log("STATE::" + this.props.sezonArray);
-        const { buttonStyle, textStyle, tarlaAddButtonStyle, tarlaAddTextStyle } = styles;
+        const { buttonStyle, textStyle, tarlaAddButtonStyle, tarlaAddTextStyle,wrapper_Style } = styles;
         return (
             <View>
                 <ListView
@@ -44,6 +62,25 @@ class UrunHasat extends Component {
                 <TouchableOpacity onPress={this.urunHasatAdd.bind(this)}  style={[buttonStyle, {backgroundColor:'rgba(193,255,39,0.58)'}]}>
                     <Text style={tarlaAddTextStyle}> Hasat Ekle </Text>
                 </TouchableOpacity>
+                <View>
+                    <Dialog.Container visible={this.state.dialogVisible}>
+                        <Dialog.Title>Hasat Ekleme</Dialog.Title>
+                        <Dialog.Input
+                            label="Birim Hasat"
+                            wrapperStyle={wrapper_Style}
+                            value={this.props.birimHasat}
+                            onChangeText={birimHasat => this.props.birimHasatChanged(birimHasat)}
+                        />
+                        <Dialog.Input
+                            label="Birim Hasat Miktarı"
+                            wrapperStyle={wrapper_Style}
+                            value={this.props.birimHasatMiktar}
+                            onChangeText={birimHasatMiktar => this.props.birimHasatMiktarChanged(birimHasatMiktar)}
+                        />
+                        <Dialog.Button label="Cancel" onPress={this.handleCancel} />
+                        <Dialog.Button label="Kaydet" onPress={this.handleSave.bind(this)} />
+                    </Dialog.Container>
+                </View>
             </View>
         );
     }
@@ -70,6 +107,17 @@ const styles = {
         paddingTop: 10,
         paddingBottom: 10
     },
+    wrapper_Style: {
+        alignSelf: 'stretch',
+        color: '#636564',
+        fontSize: 10,
+        fontWeight: '100',
+        backgroundColor: '#ffffff99',
+        borderRadius: 8,
+        borderWidth: 1,
+        borderColor: '#636564',
+        position: 'relative'
+    },
     tarlaAddButtonStyle: {
         alignSelf: 'stretch',
         backgroundColor: 'rgba(11,9,11,0.98)',
@@ -94,7 +142,6 @@ const styles = {
     }
 };
 const mapStateToProps = ({ kimlikdogrulamaResponse }) => {
-    debugger
     const sezonId = kimlikdogrulamaResponse.sezonId;
     const kullaniciId = kimlikdogrulamaResponse.kullaniciId;
     const HasatArray = _.map(kimlikdogrulamaResponse.urunList.urunHasat,(val) =>{
@@ -103,4 +150,4 @@ const mapStateToProps = ({ kimlikdogrulamaResponse }) => {
     return {HasatArray,kullaniciId,sezonId};
 };
 
-export default connect(mapStateToProps,{tarlaAddClickTarlaList })(UrunHasat);
+export default connect(mapStateToProps,{birimHasatChanged,birimHasatMiktarChanged,tarlaAddClickTarlaList,hasatPut })(UrunHasat);

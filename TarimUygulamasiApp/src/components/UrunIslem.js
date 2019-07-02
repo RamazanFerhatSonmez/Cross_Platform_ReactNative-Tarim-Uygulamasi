@@ -6,17 +6,35 @@ import {
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import {connect} from "react-redux";
-import { tarlaAddClickTarlaList } from "../actions";
+import { tarlaAddClickTarlaList,IslemAdiChanged,IslemMasrafiChanged,islemPut } from "../actions";
 import ListItemUrunIslem from './ListItemUrunIslem';
+import Dialog from "react-native-dialog";
 let { height, width } = Dimensions.get('window');
 class UrunIslem extends Component {
     componentWillMount() {
         this.urunIslemListDataSource(this.props);
     }
-    urunIslemAdd() {
+    state = {
+        dialogVisible: false,
+        IslemAdi:'',
+        IslemMasrafi:'',
+    };
+    urunIslemAdd = () => {
+        this.setState({ dialogVisible: true });
+    };
+    handleCancel = () => {
+        this.setState({ dialogVisible: false });
+    };
+    handleSave = () => {
+        // The user has pressed the "Delete" button, so here you can do your own logic.
+        // ...Your logic
+        console.log(this)
+        const islemData = {
 
-
-    }
+        }
+        this.props.islemPut(islemData);
+        this.setState({ dialogVisible: false });
+    };
     urunIslemListDataSource({UrunIslemArray}) {
         const ds = new ListView.DataSource({
             rowHasChanged: (r1, r2) => r1 !== r2
@@ -32,7 +50,7 @@ class UrunIslem extends Component {
         Actions.userProfil();
     }
     render() {
-        const { buttonStyle, textStyle, tarlaAddButtonStyle, tarlaAddTextStyle } = styles;
+        const { buttonStyle, textStyle, tarlaAddButtonStyle, tarlaAddTextStyle,wrapper_Style } = styles;
         return (
             <View>
                 <ListView
@@ -43,6 +61,25 @@ class UrunIslem extends Component {
                 <TouchableOpacity onPress={this.urunIslemAdd.bind(this)}  style={[buttonStyle, {backgroundColor:'rgba(193,255,39,0.58)'}]}>
                     <Text style={tarlaAddTextStyle}> Islem Ekle </Text>
                 </TouchableOpacity>
+                <View>
+                    <Dialog.Container visible={this.state.dialogVisible}>
+                        <Dialog.Title>Islem Ekleme</Dialog.Title>
+                        <Dialog.Input
+                            label="Islem Adı"
+                            wrapperStyle={wrapper_Style}
+                            value={this.props.IslemAdi}
+                            onChangeText={IslemAdi => this.props.IslemAdiChanged(IslemAdi)}
+                        />
+                        <Dialog.Input
+                            label="Islem Masrafı(TL)"
+                            wrapperStyle={wrapper_Style}
+                            value={this.props.IslemMasrafi}
+                            onChangeText={IslemMasrafi => this.props.IslemMasrafiChanged(IslemMasrafi)}
+                        />
+                        <Dialog.Button label="Cancel" onPress={this.handleCancel} />
+                        <Dialog.Button label="Kaydet" onPress={this.handleSave.bind(this)} />
+                    </Dialog.Container>
+                </View>
             </View>
         );
     }
@@ -60,6 +97,17 @@ const styles = {
         fontWeight: '600',
         paddingTop: 10,
         paddingBottom: 10
+    },
+    wrapper_Style: {
+        alignSelf: 'stretch',
+        color: '#636564',
+        fontSize: 10,
+        fontWeight: '100',
+        backgroundColor: '#ffffff99',
+        borderRadius: 8,
+        borderWidth: 1,
+        borderColor: '#636564',
+        position: 'relative'
     },
     tarlaAddTextStyle: {
         alignSelf: 'center',
@@ -93,7 +141,6 @@ const styles = {
     }
 };
 const mapStateToProps = ({ kimlikdogrulamaResponse }) => {
-    debugger
     const sezonId = kimlikdogrulamaResponse.sezonId;
     const kullaniciId = kimlikdogrulamaResponse.kullaniciId;
     const UrunIslemArray = _.map(kimlikdogrulamaResponse.urunList.islemTuru,(val) =>{
@@ -102,4 +149,4 @@ const mapStateToProps = ({ kimlikdogrulamaResponse }) => {
     return {UrunIslemArray,kullaniciId,sezonId};
 };
 
-export default connect(mapStateToProps,{tarlaAddClickTarlaList })(UrunIslem);
+export default connect(mapStateToProps,{IslemAdiChanged,IslemMasrafiChanged,tarlaAddClickTarlaList,islemPut })(UrunIslem);

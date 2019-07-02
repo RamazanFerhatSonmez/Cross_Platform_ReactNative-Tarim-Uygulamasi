@@ -34,7 +34,6 @@ export default (state = INITIAL_STATE, action) => {
             console.log("ACTION::" + action);
             return { ...state, loading: true };
         case LOGIN_USER_SUCCESS:
-            debugger
             return { ...state, mail: action.payload.KullaniciMail, kullaniciId: action.payload._id,sezon: action.payload.sezonTanimlama, loading: false};
         case LOGIN_USER_FAIL:
             return { ...state, loading: false, email: '', password: '' };

@@ -7,7 +7,6 @@ import {connect} from "react-redux";
 
 class ListItemUrun extends  Component {
     urunClick() {
-        debugger
         return new Promise((resolve, reject) => {
             const urunContent = this.props.urun;
             let _resolve = this.props.getUrunContent(urunContent);

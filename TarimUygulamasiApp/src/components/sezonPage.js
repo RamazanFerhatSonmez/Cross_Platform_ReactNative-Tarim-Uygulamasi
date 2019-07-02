@@ -26,12 +26,12 @@ class sezonPage extends Component {
     handleSave = () => {
         // The user has pressed the "Delete" button, so here you can do your own logic.
         // ...Your logic
-        debugger
         console.log(this)
         const mail = this.props.mail;
         const sezonName = this.props.sezonName;
-        this.props.sezonNamePut(mail,sezonName);
-        this.setState({ dialogVisible: false });
+        debugger
+        this.props.sezonNamePut(mail,sezonName)
+            this.setState({ dialogVisible: false });
     };
     sezonListDataSource({sezonArray}) {
         const ds = new ListView.DataSource({
@@ -44,11 +44,11 @@ class sezonPage extends Component {
         return <ListItem sezon={sezon}/>;
     }
     render() {
-        const { buttonStyle, textStyle, sezonAddButtonStyle, sezonAddTextStyle } = styles;
+        const { buttonStyle,sezonAddTextStyle } = styles;
         return (
             <View>
                 <ListView
-                  enableEmptySections
+                  enableEmptySections 
                   dataSource={this.dataSource}
                   renderRow={this.renderRow}
                 />

@@ -20,8 +20,8 @@ class ListItemTarla extends  Component {
                     <View>
                         <View style={styles.ViewStyleBugday}>
                             <Text style={styles.TextStyle}>
-                                {'tarlaAd: ' + tarlaAd} {"\n"}
-                                {'Tarla Dekar: ' + tarlaDekarBilgisi } {"\n"}
+                                {'tarlaAd: ' + tarlaAd}
+                                {'   Tarla Dekar: ' + tarlaDekarBilgisi } {"\n"}
                                 {'Oluşturulduğu Tarih: ' + Moment({tarlaOlusTarih}).format('d MMM YYYY')}
                             </Text>
                         </View>

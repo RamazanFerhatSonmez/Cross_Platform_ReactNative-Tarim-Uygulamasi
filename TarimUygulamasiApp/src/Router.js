@@ -78,7 +78,8 @@ class RouterComponent extends React.Component {
                         rightTitle="Cıkış Yap"
                         key="UrunContent"
                         component={UrunContent}
-                     />
+                        title="Tarla İşlemleri"
+                    />
                 </Scene>
             </Router>
         );
@@ -88,16 +89,16 @@ const styles = {
     navBar: {
         backgroundColor: '#63656490',
     },
-    navBarTitle:{
+    navBarTitle: {
         color: '#fff',
         alignSelf: 'center',
         fontSize: 16,
         fontWeight: '600',
     },
-    barButtonTextStyle:{
+    barButtonTextStyle: {
         color: '#FFFFFF'
     },
-    barButtonIconStyle:{
+    barButtonIconStyle: {
         tintColor: 'rgb(255,255,255)'
     },
 }

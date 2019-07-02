@@ -6,17 +6,38 @@ import {
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import {connect} from "react-redux";
-import { tarlaAddClickTarlaList } from "../actions";
+import { tarlaAddClickTarlaList,aciklamaChanged,miktarChanged,_IslemMasrafiChanged,masrafPut } from "../actions";
 import ListItemUrunMasraf from './ListItemUrunMasraf';
+import Dialog from "react-native-dialog";
 let { height, width } = Dimensions.get('window');
 class UrunMasraf extends Component {
     componentWillMount() {
+        //
         this.urunMasrafListDataSource(this.props);
     }
-    urunIslemAdd() {
+    state = {
+        dialogVisible: false,
+        aciklama:'',
+        miktar:'',
+        masraf:'',
+    };
+    urunMasrafAdd = () => {
+        this.setState({ dialogVisible: true });
+    };
+    handleCancel = () => {
+        this.setState({ dialogVisible: false });
+    };
+    handleSave = () => {
+        // The user has pressed the "Delete" button, so here you can do your own logic.
+        // ...Your logic
+        console.log(this)
+        const masrafData = {
 
+        }
+        this.props.masrafPut(masrafData);
+        this.setState({ dialogVisible: false });
 
-    }
+    };
     urunMasrafListDataSource({UrunMasrafArray}) {
         const ds = new ListView.DataSource({
             rowHasChanged: (r1, r2) => r1 !== r2
@@ -32,7 +53,7 @@ class UrunMasraf extends Component {
         Actions.userProfil();
     }
     render() {
-        const { buttonStyle, textStyle, tarlaAddButtonStyle, tarlaAddTextStyle } = styles;
+        const { buttonStyle, textStyle, tarlaAddButtonStyle, tarlaAddTextStyle,wrapper_Style } = styles;
         return (
             <View>
                 <ListView
@@ -40,9 +61,34 @@ class UrunMasraf extends Component {
                     dataSource={this.dataSource}
                     renderRow={this.renderRow}
                 />
-                <TouchableOpacity onPress={this.urunIslemAdd.bind(this)}  style={[buttonStyle, {backgroundColor:'rgba(193,255,39,0.58)'}]}>
+                <TouchableOpacity onPress={this.urunMasrafAdd.bind(this)}  style={[buttonStyle, {backgroundColor:'rgba(193,255,39,0.58)'}]}>
                     <Text style={tarlaAddTextStyle}> Masraf Ekle </Text>
                 </TouchableOpacity>
+                <View>
+                    <Dialog.Container visible={this.state.dialogVisible}>
+                        <Dialog.Title>Masraf Ekleme</Dialog.Title>
+                        <Dialog.Input
+                            label="Acıklama"
+                            wrapperStyle={wrapper_Style}
+                            value={this.props.aciklama}
+                            onChangeText={aciklama => this.props.aciklamaChanged(aciklama)}
+                        />
+                        <Dialog.Input
+                            label="Miktar"
+                            wrapperStyle={wrapper_Style}
+                            value={this.props.miktar}
+                            onChangeText={miktar => this.props.miktarChanged(miktar)}
+                        />
+                        <Dialog.Input
+                            label="Masraf(TL)"
+                            wrapperStyle={wrapper_Style}
+                            value={this.props.masraf}
+                            onChangeText={masraf => this.props._IslemMasrafiChanged(masraf)}
+                        />
+                        <Dialog.Button label="Cancel" onPress={this.handleCancel} />
+                        <Dialog.Button label="Kaydet" onPress={this.handleSave.bind(this)} />
+                    </Dialog.Container>
+                </View>
             </View>
         );
     }
@@ -60,6 +106,17 @@ const styles = {
         fontWeight: '600',
         paddingTop: 10,
         paddingBottom: 10
+    },
+    wrapper_Style: {
+        alignSelf: 'stretch',
+        color: '#636564',
+        fontSize: 10,
+        fontWeight: '100',
+        backgroundColor: '#ffffff99',
+        borderRadius: 8,
+        borderWidth: 1,
+        borderColor: '#636564',
+        position: 'relative'
     },
     tarlaAddTextStyle: {
         alignSelf: 'center',
@@ -93,7 +150,6 @@ const styles = {
     }
 };
 const mapStateToProps = ({ kimlikdogrulamaResponse }) => {
-    debugger
     const sezonId = kimlikdogrulamaResponse.sezonId;
     const kullaniciId = kimlikdogrulamaResponse.kullaniciId;
     const UrunMasrafArray = _.map(kimlikdogrulamaResponse.urunList.urunMasrafTablo,(val) =>{
@@ -102,4 +158,4 @@ const mapStateToProps = ({ kimlikdogrulamaResponse }) => {
     return {UrunMasrafArray,kullaniciId,sezonId};
 };
 
-export default connect(mapStateToProps,{tarlaAddClickTarlaList })(UrunMasraf);
+export default connect(mapStateToProps,{aciklamaChanged,miktarChanged,_IslemMasrafiChanged,tarlaAddClickTarlaList,masrafPut })(UrunMasraf);

@@ -60,6 +60,7 @@
 		8ED43AFA8CAB4D58955654FB /* libRNReanimated.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CA5E673B0894FF5B3AF6ECF /* libRNReanimated.a */; };
 		CF865664DBCE4BD989B75E4D /* libRNGestureHandler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 131849AF2C8B4D4EB793FDC3 /* libRNGestureHandler.a */; };
 		2A019BDFE0BE42B3BFD97468 /* libRNGestureHandler-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7660A98306404B4AA6F571DB /* libRNGestureHandler-tvOS.a */; };
+		46A95F4890884614A0EFCAE5 /* Fontisto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B62C72A74A9949A8832465E6 /* Fontisto.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -392,6 +393,7 @@
 		772C93FC40AC4F2187F513D6 /* RNGestureHandler.xcodeproj */ = {isa = PBXFileReference; name = "RNGestureHandler.xcodeproj"; path = "../node_modules/react-native-gesture-handler/ios/RNGestureHandler.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 		131849AF2C8B4D4EB793FDC3 /* libRNGestureHandler.a */ = {isa = PBXFileReference; name = "libRNGestureHandler.a"; path = "libRNGestureHandler.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 		7660A98306404B4AA6F571DB /* libRNGestureHandler-tvOS.a */ = {isa = PBXFileReference; name = "libRNGestureHandler-tvOS.a"; path = "libRNGestureHandler-tvOS.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		B62C72A74A9949A8832465E6 /* Fontisto.ttf */ = {isa = PBXFileReference; name = "Fontisto.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/Fontisto.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -685,6 +687,7 @@
 				552192E00E494EDEA888E67E /* Octicons.ttf */,
 				9152636E77164B15B7F5298D /* SimpleLineIcons.ttf */,
 				4C810982EF21458AA3F8FBFC /* Zocial.ttf */,
+				B62C72A74A9949A8832465E6 /* Fontisto.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1151,6 +1154,7 @@
 				B2E60FA245F14E6DBF79B0EC /* Octicons.ttf in Resources */,
 				682EA6B188D2486C9426050D /* SimpleLineIcons.ttf in Resources */,
 				355845E3517D481991D94CDA /* Zocial.ttf in Resources */,
+				46A95F4890884614A0EFCAE5 /* Fontisto.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

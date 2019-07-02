@@ -1,12 +1,14 @@
 import { Alert } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import { AD_CHANGED_UYE,
+import {
+    AD_CHANGED_UYE,
     SOYAD_CHANGED_UYE,
     EMAIL_CHANGED_UYE,
     PASSWORD_CHANGED_UYE,
     LOGIN_USER_UYE,
     LOGIN_USER_SUCCESS_UYE,
-    LOGIN_USER_FAIL_UYE } from './types';
+    LOGIN_USER_FAIL_UYE
+} from './types';
 import axios from "axios";
 
 export const adChangeduye = (ad) => {
@@ -53,11 +55,11 @@ export const loginUseruye = ({ ad, soyad, email, password }) => {
         }
         else {
             const _post = ad + "/" + soyad + "/" + email + "/" + password + "/" + password
-            axios.post('http://192.168.1.2:3033/SignIn/'+ _post)
+            axios.post('http://192.168.1.2:3030/SignIn/' + _post)
                 .then(function (response) {
-                    if((response.status === 200)){
+                    if ((response.status === 200)) {
                         loginSucces(dispatch, email)
-                    }else{
+                    } else {
                         loginFail(dispatch)
                     }
                 })
@@ -89,7 +91,7 @@ const loginSucces = (dispatch, user) => {
             { text: 'Tamam', onPress: () => null }
         ]
     );
-    axios.post('http://192.168.1.2:3033/SignIn/'+ _post)
+    axios.post('http://192.168.1.2:3030/SignIn/' + _post)
     Actions.girisYap();
 };
 
