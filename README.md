@@ -25,5 +25,7 @@
 # Uygulamanın Hasat Ekleme Ekranı
 ![hasatekleme](https://user-images.githubusercontent.com/32498472/60435035-35a69f00-9c11-11e9-932a-52ac0c545c79.PNG)
 
+[Uploading Ramazan Sönmez 2015123003 Bitirme Projesi Raporu.pdf…]()
+
 
 
