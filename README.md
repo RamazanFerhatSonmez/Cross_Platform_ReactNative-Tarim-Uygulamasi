@@ -6,15 +6,15 @@
 çiftçilerin tarlalarına ektikleri ürünlerin genel durumunu gözlemleyebilmeyi hedef alan
 bir mobil uygulamadır.
 #  Projenin Hedefi ve Başarı Kriterleri
-*Kullanıcının yeni tarla ekleyebilmesi
-*Kullanıcının eklediği tarlaya ait konumunu belirleyebilmesi
-*Belirlediği konumdaki tarlaya ürün istediği ürün bilgilerini girerek
+* Kullanıcının yeni tarla ekleyebilmesi
+* Kullanıcının eklediği tarlaya ait konumunu belirleyebilmesi
+* Belirlediği konumdaki tarlaya ürün istediği ürün bilgilerini girerek
 kaydedebilmesi
 *   Sahip olduğu tarlaları görüntüleyebilmesi
-*Tarlalarında ekili olan ürünleri ve ürünler hakkında detaylı bilgileri(Ekim yeri,
+* Tarlalarında ekili olan ürünleri ve ürünler hakkında detaylı bilgileri(Ekim yeri,
 ekim tarihi, hasat tarihi, ekildiğinden itibaren geçen süre, hasat için kalan süre, maliyet,
 ekilen kg, tarım tipi, gübre çeşidi, ekildiği alan) görebilmesi
-*Tüm tarlaların maliyet ve karının hesaplanması
+* Tüm tarlaların maliyet ve karının hesaplanması
 
 # Installation
 ``` 
