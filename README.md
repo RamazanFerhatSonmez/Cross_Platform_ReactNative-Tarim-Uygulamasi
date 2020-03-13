@@ -24,7 +24,7 @@ git clone https://github.com/RamazanFerhatSonmez/Cross-PlatformReactNative-Tar-m
 
 ## Dependencies
 
-Tensorflow Object Detection API depends on the following libraries:
+Cross Platform İle React-Native Tarım App depends on the following libraries:
 *  React-Native 
 * Redux
 * MongoDB
