@@ -18,7 +18,7 @@ ekilen kg, tarım tipi, gübre çeşidi, ekildiği alan) görebilmesi
 
 ## Installation
 ``` 
-git clone https://github.com/RamazanFerhatSonmez/Cross-PlatformReactNative-Tar-m-Uygulamas-.git
+git clone https://github.com/RamazanFerhatSonmez/Cross_Platform_ReactNative-Tarim-Uygulamasi.git
 
 ```
 
